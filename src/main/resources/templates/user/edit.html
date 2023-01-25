@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+  <form th:method="PATCH" th:action="@{/admin.html{id}{id=${user.getId}" th:object="${user}"
+        <label for="username">Введите имя пользователя</label>
+        <input type="text" th:field="*{username}" id="username">
+
+        <label for="name">Введите имя</label>
+        <input type="text" th:field="*{name}" id="name">
+
+        <label for="surname">Введите фамилию</label>
+        <input type="text" th:field="*{surname}" id="surname">
+
+        <label for="email">Введите email</label>
+        <input type="text" th:field="*{email}" id="email">
+
+        <label for="username">Введите пароль</label>
+        <input type="password" th:field="*{password}" id="password">
+</body>
+</html>
