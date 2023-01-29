@@ -17,4 +17,8 @@ public class AdminService {
         this.roleService = roleService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void doAdminStruff() {
+        userService.getAllUsers();
+    }
 }

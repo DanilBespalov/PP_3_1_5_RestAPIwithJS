@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
+import ru.kata.spring.boot_security.demo.service.AdminService;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
@@ -23,16 +24,17 @@ public class AdminController {
 
     private final UserServiceImpl userService;
     private final RoleServiceImpl roleService;
+    private final AdminService adminService;
 
     @Autowired
-    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
+    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService, AdminService adminService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.adminService = adminService;
     }
-
     @GetMapping("/admin")
     public String adminPage(@ModelAttribute("users") User user) {
-        userService.getAllUsers();
+        adminService.doAdminStruff();
         return "admin";
     }
 
