@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.util.Validate;
+import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -31,31 +31,25 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registartionPage(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        return "user/registration";
+        userService.getAllUsers();
+        return "/registration";
     }
 
     @PostMapping("/registration")
     public String perfomRegistration(@ModelAttribute("user") User user) {
+        Role role = new Role("ROLE_USER");
+        roleService.saveRoles(role);
+        user.setRoles(Set.of(role));
         userService.saveUser(user);
         return "redirect:/login";
     }
 
     @GetMapping("/showUserInfo/{id}")
-    public String showUserInfo(@ModelAttribute ("user") User user, Long id) {
-        userService.getUserByUsername(String.valueOf(user));
-
-
-        return "user/user";
+    public String showUserInfo(@ModelAttribute ("user") User user, @PathVariable Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
+        userServiceImpl.getUserById(id);
+        return "user";
     }
-
-
-    @GetMapping("/user/edit/{id}")
-    public String editUser(@PathVariable(name = "id") Long id) {
-        User user = userService.getUserById(id);
-        userService.updateUser(id, user);
-        return "user/edit";
-    }
-
 
 }

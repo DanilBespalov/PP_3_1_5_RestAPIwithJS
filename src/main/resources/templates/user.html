@@ -13,10 +13,15 @@
                 <th>email</th>
             </tr>
             <tr th:each="user:${user}">
-                <td th:utext="${user.get}"
+                <td th:utext="${user.getUsername()}"></td>
+                <td th:utext="${user.getName()}"></td>
+                <td th:utext="${user.getSurname()}"></td>
+                <td th:utext="${user.getEmail()}"></td>
             </tr>
 
         </table>
-
+<form th:method="DELETE" th:action="@{/user/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
 </body>
 </html>

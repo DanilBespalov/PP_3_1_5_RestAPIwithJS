@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public User getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
 
-            return user.orElseThrow();
+            return user.orElseThrow(()->new UsernameNotFoundException(String.format("User with %s not found", id)));
     }
 
     @Override

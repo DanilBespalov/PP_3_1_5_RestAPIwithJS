@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
 
   <h1>This is admin page </h1>
 </head>
-<body>
 
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">UserName</th>
+        <th scope="col">email</th>
+    </tr>
+    </thead>
+
+
+    <div th:each="user : ${users}">
+        <tr>
+            <td th:text="${users.getId()}"></td>
+            <td th:text="${users.getName()}"></td>
+            <td th:text="${users.getSurname()}"></td>
+            <td th:text="${users.getUsername()()}"></td>
+            <td th:text="${users.getEmail()()}"></td>
+            <td> <a th:href="@{/users/{id}/edit(id=${users.getId()})}">Edit</a>
+            <td> <a th:href="@{/users/{id}/delete(id=${users.getId()})}">Delete</a>
+            </td>
+        </tr>
+
+
+    </div>
+</table>
+<br>
+<hr>
+<a href="/admin/new">Create new user</a>
 </body>
 </html>
