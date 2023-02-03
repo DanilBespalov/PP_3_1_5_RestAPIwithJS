@@ -7,21 +7,24 @@
 <h1>User, welcome spring boot security page!</h1>
         <table>
             <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
                 <th>Username</th>
-                <th>Name</th>
-                <th>Surname</th>
                 <th>email</th>
             </tr>
             <tr th:each="user:${user}">
-                <td th:utext="${user.getUsername()}">VALUE</td>
                 <td th:utext="${user.getName()}"></td>
                 <td th:utext="${user.getSurname()}"></td>
+                <td th:utext="${user.getUsername()}"></td>
                 <td th:utext="${user.getEmail()}"></td>
             </tr>
-
         </table>
-<form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
-    <input type="submit" value="Delete"/>
+
 </form>
+<br/>
+<br/>
+<br/>
+<br/>
+<a href="/logout">Logout</a>
 </body>
 </html>

@@ -7,10 +7,6 @@
 </head>
 <body>
   <form th:method="PATCH" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
-        <label for="username">Введите имя пользователя</label>
-        <input type="text" th:field="*{username}" id="username">
-        <br/>
-
         <label for="name">Введите имя</label>
         <input type="text" th:field="*{name}" id="name">
         <br/>
@@ -19,20 +15,18 @@
         <input type="text" th:field="*{surname}" id="surname">
         <br/>
 
+        <label for="username">Введите имя пользователя</label>
+        <input type="text" th:field="*{username}" id="username">
+        <br/>
+
         <label for="email">Введите email</label>
         <input type="text" th:field="*{email}" id="email">
         <br/>
 
         <label for="username">Введите пароль</label>
         <input type="password" th:field="*{password}" id="password">
-      <br/>
-      <input type="submit" value="Edit!">
-
-
-
-      <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
-          <input type="submit" value="Delete"/>
-      </form>
+        <br/>
+        <input type="submit" value="Edit!">
 
   </form>
   <br/>

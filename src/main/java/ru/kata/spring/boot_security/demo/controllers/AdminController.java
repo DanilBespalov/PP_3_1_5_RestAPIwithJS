@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,8 +31,8 @@ public class AdminController {
         this.roleService = roleService;
     }
     @GetMapping()
-    public String adminPage(@ModelAttribute("users") User user) {
-        userService.getAllUsers();
+    public String adminPage(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
         return "admin";
     }
 
@@ -64,7 +65,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteuser(@ModelAttribute("uer") User user, @PathVariable("id") Long id) {
+    public String deleteUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.removeUser(id);
         return "redirect:/admin";
     }
