@@ -9,15 +9,19 @@
   <form th:method="PATCH" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
         <label for="username">Введите имя пользователя</label>
         <input type="text" th:field="*{username}" id="username">
+        <br/>
 
         <label for="name">Введите имя</label>
         <input type="text" th:field="*{name}" id="name">
+        <br/>
 
         <label for="surname">Введите фамилию</label>
         <input type="text" th:field="*{surname}" id="surname">
+        <br/>
 
         <label for="email">Введите email</label>
         <input type="text" th:field="*{email}" id="email">
+        <br/>
 
         <label for="username">Введите пароль</label>
         <input type="password" th:field="*{password}" id="password">
@@ -25,7 +29,11 @@
       <input type="submit" value="Edit!">
 
   </form>
-  <a href="admin.html">Back</a>
+  <br/>
+  <br/>
+  <a href="/admin">Back</a>
+<br/>
+<br/>
 <br/>
 <br/>
 <a href="/logout">Logout</a>
