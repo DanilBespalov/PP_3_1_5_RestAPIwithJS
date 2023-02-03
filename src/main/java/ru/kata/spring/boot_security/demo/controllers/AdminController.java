@@ -31,6 +31,7 @@ public class AdminController {
     }
     @GetMapping()
     public String adminPage(@ModelAttribute("users") User user) {
+        userService.getAllUsers();
         return "admin";
     }
 
@@ -56,7 +57,7 @@ public class AdminController {
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.updateUser(id, user);
         return "redirect:/admin";

@@ -28,6 +28,12 @@
       <br/>
       <input type="submit" value="Edit!">
 
+
+
+      <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+          <input type="submit" value="Delete"/>
+      </form>
+
   </form>
   <br/>
   <br/>
