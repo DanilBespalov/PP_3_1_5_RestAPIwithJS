@@ -29,8 +29,8 @@
             <td th:text="${users.getSurname()}"></td>
             <td th:text="${users.getUsername()}"></td>
             <td th:text="${users.getEmail()}"></td>
-            <td> <a th:href="@{/users/{id}/edit(id=${users.getId()})}">Edit</a>
-            <td> <a th:href="@{/users/{id}/delete(id=${users.getId()})}">Delete</a>
+            <td> <a th:href="@{/admin/edit/{id}(id=${users.getId()})}">Edit</a>
+            <td> <a th:href="@{/admin/delete/{id}(id=${users.getId()})}">Delete</a>
             </td>
         </tr>
 
@@ -39,6 +39,7 @@
 </table>
 <br>
 <hr>
-<a href="/admin/new">Create new user</a>
+<a th:href="@{/admin/new}">Create new user</a>
+
 </body>
 </html>

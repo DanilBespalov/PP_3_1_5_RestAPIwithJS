@@ -21,21 +21,21 @@ public class util {
         this.roleService = roleService;
     }
 
-    @PostConstruct
-    private void createRoleAndUser() {
-        Role adminRole = new Role("ROLE_ADMIN");
-        Role userRole = new Role("ROLE_USER");
-
-        roleService.saveRoles(adminRole);
-        roleService.saveRoles(userRole);
-
-        User admin = new User("ADMIN_NAME", "ADMIN_SURNAME",
-                "admin", "admin", "adminMail", Set.of(adminRole));
-
-        User user = new User("USER_NAME", "USER_SURNAME",
-                "user", "user", "userMail", Set.of(userRole));
-
-        userService.saveUser(admin);
-        userService.saveUser(user);
-    }
+//    @PostConstruct
+//    private void createRoleAndUser() {
+//        Role adminRole = new Role("ROLE_ADMIN");
+//        Role userRole = new Role("ROLE_USER");
+//
+//        roleService.saveRoles(adminRole);
+//        roleService.saveRoles(userRole);
+//
+//        User admin = new User("ADMIN_NAME", "ADMIN_SURNAME",
+//                "admin", "admin", "adminMail", Set.of(adminRole));
+//
+//        User user = new User("USER_NAME", "USER_SURNAME",
+//                "user", "user", "userMail", Set.of(userRole));
+//
+//        userService.saveUser(admin);
+//        userService.saveUser(user);
+//    }
 }

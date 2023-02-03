@@ -40,7 +40,7 @@ public class AdminController {
         return "new";
     }
 
-    @PostMapping("/createUser")
+    @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user) {
         Role role = new Role("ROLE_USER");
         roleService.saveRoles(role);

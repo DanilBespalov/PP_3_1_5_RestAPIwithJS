@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/showUserInfo/{id}")
-    public String showUserInfo(@ModelAttribute ("user") User user, @PathVariable Long id) {
+    public String showUserInfo(@ModelAttribute ("user") User user, @PathVariable("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
         userServiceImpl.getUserById(id);
