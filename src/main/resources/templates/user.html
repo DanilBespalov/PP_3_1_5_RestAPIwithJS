@@ -12,7 +12,7 @@
                 <th>Username</th>
                 <th>email</th>
             </tr>
-            <tr th:each="user:${user}">
+            <tr th:each="users:${user}">
                 <td th:utext="${user.getName()}"></td>
                 <td th:utext="${user.getSurname()}"></td>
                 <td th:utext="${user.getUsername()}"></td>
@@ -25,6 +25,8 @@
 <br/>
 <br/>
 <br/>
-<a href="/logout">Logout</a>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
+</form>
 </body>
 </html>
