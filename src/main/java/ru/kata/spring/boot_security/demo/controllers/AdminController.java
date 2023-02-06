@@ -66,8 +66,8 @@ public class AdminController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+        roleService.removeRoleById(id);
         userService.removeUser(id);
-//        roleService.removeRoleById(id);
         return "redirect:/admin";
     }
 }

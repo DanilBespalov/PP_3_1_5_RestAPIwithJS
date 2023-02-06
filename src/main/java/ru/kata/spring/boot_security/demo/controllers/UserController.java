@@ -16,10 +16,11 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
+import java.security.Principal;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping()
 public class UserController {
 
     private UserServiceImpl userService;
@@ -34,14 +35,16 @@ public class UserController {
     @GetMapping("/registration")
     public String registartionPage(@ModelAttribute("user") User user) {
         userService.getAllUsers();
+        roleService.getRoles();
         return "/registration";
     }
 
     @PostMapping("/registration")
     public String perfomRegistration(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        Role role = new Role("ROLE_USER");
-        roleService.saveRoles(role);
-        user.setRoles(Set.of(role));
+//        Role role = new Role("ROLE_USER");
+//        roleService.saveRoles(role);
+//        user.setRoles(Set.of(role));
+        roleService.getRoles();
         userService.saveUser(user);
 
         if (bindingResult.hasErrors()) {
@@ -51,11 +54,10 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/showUserInfo/{id}")
-    public String showUserInfo(@ModelAttribute ("user") User user, @PathVariable("id") Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
-        userServiceImpl.getUserById(id);
+    @GetMapping("/user")
+    public String showUserInfo(@ModelAttribute ("user") User user, Principal principal) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
         return "user";
     }
 
