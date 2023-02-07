@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             userFromRep.setId(id);
             userFromRep.setName(user.getName());
             userFromRep.setUsername(user.getUsername());
-            userFromRep.setPassword(user.getPassword());
+            userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userFromRep.setEmail(user.getEmail());
 
             userRepository.save(userFromRep);

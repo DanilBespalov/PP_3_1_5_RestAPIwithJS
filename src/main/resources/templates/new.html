@@ -37,6 +37,22 @@
   <input type="submit" value="Create!">
 
 </form>
+  <label for="roles">Choose a role:</label>
 
+  <select name="roles" id="roles">
+    <option th:value="userRole">User</option>
+  <option th:value="adminRole">Admin</option>
+
+<!--    <p>-->
+<!--    <label>Select role:-->
+<!--        <input type="checkbox" name="roles"-->
+<!--                th:each="roles : ${role}"-->
+<!--                th:value="${roles.role}"-->
+<!--                th:text="${roles.id}" />-->
+<!--    </label>-->
+<!--    </p>-->
+
+
+</select>
 </body>
 </html>

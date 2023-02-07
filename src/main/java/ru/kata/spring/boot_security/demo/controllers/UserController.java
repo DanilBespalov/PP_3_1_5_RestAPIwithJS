@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,11 +55,19 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/user")
-    public String showUserInfo(@ModelAttribute ("user") User user, Principal principal) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
+    @GetMapping("/user/{id}")
+    public String showUserInfo(@ModelAttribute ("user") User user, @PathVariable("id") Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
+        userServiceImpl.getUserById(id);
         return "user";
     }
+
+    // или так
+//    @GetMapping("/user/{id}")
+//    public String showUserInfo(Model model, Principal principal) {
+//       model.addAttribute("user", userService.getUserByUsername(principal.getName()));
+//        return "user";
+//    }
 
 }

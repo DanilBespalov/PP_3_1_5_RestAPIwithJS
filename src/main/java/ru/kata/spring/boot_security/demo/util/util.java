@@ -21,14 +21,14 @@ public class util {
         this.roleService = roleService;
     }
 
-//    @PostConstruct
-//    private void createRoleAndUser() {
+    @PostConstruct
+    private void createRoleAndUser() {
 //        Role adminRole = new Role("ROLE_ADMIN");
 //        Role userRole = new Role("ROLE_USER");
 //
 //        roleService.saveRoles(adminRole);
 //        roleService.saveRoles(userRole);
-//
+
 //        User admin = new User("ADMIN_NAME", "ADMIN_SURNAME",
 //                "admin", "admin", "adminMail", Set.of(adminRole));
 //
@@ -37,5 +37,5 @@ public class util {
 //
 //        userService.saveUser(admin);
 //        userService.saveUser(user);
-//    }
+    }
 }

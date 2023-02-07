@@ -29,6 +29,7 @@
             <td th:text="${user.getSurname()}"></td>
             <td th:text="${user.getUsername()}"></td>
             <td th:text="${user.getEmail()}"></td>
+            <td th:text="${user.getRoles()}"></td>
             <td>
                 <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}">
                     <input type="submit" value="Edit"/>
