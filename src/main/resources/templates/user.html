@@ -12,15 +12,18 @@
                 <th>Username</th>
                 <th>email</th>
             </tr>
-            <tr th:each="users:${user}">
-                <td th:utext="${user.getName()}"></td>
-                <td th:utext="${user.getSurname()}"></td>
-                <td th:utext="${user.getUsername()}"></td>
-                <td th:utext="${user.getEmail()}"></td>
-            </tr>
+
+            <div th:each="userInfo : ${user}">
+                <tr>
+                    <td th:text="${user.getName()}"></td>
+                    <td th:text="${user.getSurname()}"></td>
+                    <td th:text="${user.getUsername()}"></td>
+                    <td th:text="${user.getEmail()}"></td>
+                </tr>
+
+            </div>
         </table>
 
-</form>
 <br/>
 <br/>
 <br/>

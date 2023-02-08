@@ -25,10 +25,10 @@ public class util {
     private void createRoleAndUser() {
 //        Role adminRole = new Role("ROLE_ADMIN");
 //        Role userRole = new Role("ROLE_USER");
-//
+
 //        roleService.saveRoles(adminRole);
 //        roleService.saveRoles(userRole);
-
+//
 //        User admin = new User("ADMIN_NAME", "ADMIN_SURNAME",
 //                "admin", "admin", "adminMail", Set.of(adminRole));
 //
