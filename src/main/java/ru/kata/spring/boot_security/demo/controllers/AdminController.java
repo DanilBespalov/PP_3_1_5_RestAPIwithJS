@@ -44,6 +44,13 @@ public class AdminController {
 
     @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user) {
+        // сохранение только 1 роли
+//        Role role = new Role("ROLE_USER");
+//        roleService.saveRoles(role);
+//        user.setRoles(Set.of(role));
+
+//        List<Role> roles = roleService.getRoles();
+//        model.addAttribute("roles", roles);
 
         userService.saveUser(user);
 
@@ -51,9 +58,10 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String getUserEditForm(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
-        userService.getUserById(id);
-        roleService.getRoles();
+    public String getUserEditForm(@PathVariable("id") Long id, Model model) {
+        User userById = userService.getUserById(id);
+        model.addAttribute("user", userById);
+        model.addAttribute("roles", roleService.getRoles());
         return "edit";
     }
 
@@ -65,6 +73,7 @@ public class AdminController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
+//        roleService.removeRoleById(id);
         userService.removeUser(id);
         return "redirect:/admin";
     }
