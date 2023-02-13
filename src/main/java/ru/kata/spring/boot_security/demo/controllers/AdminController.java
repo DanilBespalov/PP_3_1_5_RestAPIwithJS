@@ -44,13 +44,6 @@ public class AdminController {
 
     @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user) {
-        // сохранение только 1 роли
-//        Role role = new Role("ROLE_USER");
-//        roleService.saveRoles(role);
-//        user.setRoles(Set.of(role));
-
-//        List<Role> roles = roleService.getRoles();
-//        model.addAttribute("roles", roles);
 
         userService.saveUser(user);
 
