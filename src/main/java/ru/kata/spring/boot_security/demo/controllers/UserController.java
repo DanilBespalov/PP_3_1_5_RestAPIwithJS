@@ -38,9 +38,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String perfomRegistration(@ModelAttribute("user") User user, BindingResult bindingResult) {
-//        Role role = new Role("ROLE_USER");
-//        roleService.saveRoles(role);
-//        user.setRoles(Set.of(role));
+
         userService.saveUser(user);
 
         if (bindingResult.hasErrors()) {
@@ -49,16 +47,7 @@ public class UserController {
 
         return "redirect:/login";
     }
-// в чем то ошибка, не отображает пользователя
-//    @GetMapping("/user/{id}")
-//    public String showUserInfo(@ModelAttribute ("user") User user, @PathVariable("id") Long id) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserServiceImpl userServiceImpl = (UserServiceImpl) authentication.getPrincipal();
-//        userServiceImpl.getUserById(id);
-//        return "user";
-//    }
 
-    // или так
     @GetMapping("/user")
     public String showUserInfo(Model model, Principal principal) {
         model.addAttribute("user", userService.getUserByUsername(principal.getName()));
