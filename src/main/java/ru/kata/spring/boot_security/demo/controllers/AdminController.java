@@ -27,6 +27,7 @@ public class AdminController {
         this.userService = userService;
         this.roleService = roleService;
     }
+
     @GetMapping()
     public String adminPage(Model model) {
         model.addAttribute("users", userService.getAllUsers());

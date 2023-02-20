@@ -20,6 +20,14 @@
         <th scope="col">email</th>
     </tr>
     </thead>
+        <tbody>
+        <tr class="table-active">
+            <th ID="row">1</th>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>@UserName</td>
+            <td>@email</td>
+        </tr>
 
 
     <div th:each="user : ${users}">
@@ -42,6 +50,7 @@
         </tr>
 
     </div>
+        </tbody>
 </table>
 <br>
 <hr>
