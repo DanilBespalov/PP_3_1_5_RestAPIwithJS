@@ -13,7 +13,11 @@
     <div class="container-fluid">
         <div class="row align-items-center">
             <div class="p-3 mb-2 text-white col-10">
-                Logged in as: <span th:text="${user.getName()}"></span> with role(s): <span th:text="${user.getRoles()}"></span>
+                Logged in as:
+                <div th:each="user : ${users}">
+                    <span th:text="${user.getName()}" style="white-space: nowrap;"></span> with role(s):
+                    <span th:each="role : ${user.getRoles()}" th:text="${role}" style="white-space: nowrap;"></span>
+                </div>                
             </div>
             <div class="col-2 text-white d-flex justify-content-end align-items-center">
                 <form th:method="POST" th:action="@{/logout}">
@@ -46,6 +50,52 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/new">New user</a>
                 </li>
+                 
+                
+                
+                <!-- <div class="container">
+                    <div class="row row-cols-auto">
+                        <div class="col">ID</div>
+                        <div class="col">Имя</div>
+                        <div class="col">Фамилия</div>
+                        <div class="col">UserName</div>
+                        <div class="col">email</div>
+                        <div class="col">Role</div>
+                        <div class="col">Edit</div>
+                        <div class="col">Delete</div>
+                    </div>
+
+                    <div th:each="user : ${users}" class="row row-cols-auto">
+                      <div class="col">
+                        <p th:text="${user.getId()}"></p>
+                      </div>
+                      <div class="col">
+                        <p th:text="${user.getName()}"></p>
+                      </div>
+                      <div class="col">
+                        <p th:text="${user.getSurname()}"></p>
+                      </div>
+                      <div class="col">
+                        <p th:text="${user.getUsername()}"></p>
+                      </div>
+                      <div class="col">
+                        <p th:text="${user.getEmail()}"></p>
+                      </div>
+                      <div class="col">
+                        <p th:text="${user.getRoles()}"></p>
+                      </div>
+
+                      <div class="col">
+                        <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}">
+                          <button type="submit" class="btn btn-info btn-sm">Edit</button>
+                        </form>
+                      </div>
+                      <div class="col">
+                        <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                      </div> -->
+                      
 
                 <table class="table">
                     <thead>
@@ -64,6 +114,7 @@
                     <tbody>
                     <tr class="table-active">
                         <div th:each="user : ${users}">
+                            <th:block>
                             <td th:text="${user.getId()}"></td>
                             <td th:text="${user.getName()}"></td>
                             <td th:text="${user.getSurname()}"></td>
@@ -80,6 +131,7 @@
                                     <input type="submit" value="Delete" class="btn btn-danger btn-sm"/>
                                 </form>
                             </td>
+                        </th:block>
                     </tr>
 
         </div>
