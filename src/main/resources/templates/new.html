@@ -3,19 +3,109 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-  <title>New User</title>
-</head>
-<body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New user</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
+</head>
+<header class="bg-dark" style="height: 60px;">
+  <div class="container-fluid">
+      <div class="row align-items-center">
+          <div class="p-3 mb-2 text-white col-10">
+              Logged in as: <span th:text="${user.getName()}"></span> with role(s): <span th:text="${user.getRoles()}"></span>
+          </div>
+          <div class="col-2 text-white d-flex justify-content-end align-items-center">
+              <form th:method="POST" th:action="@{/logout}">
+                  <button type="submit" class="btn btn-secondary">Logout</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</header>
+<body>
+  <div class="container-fluid">
+    <div class="row justify-content-center align-items-center g-2">
+        <div class="col-2">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin.html">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user.html">User</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10">
+
+            <h1>Admin panel </h1>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-linka" href="/admin.html">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ctive" aria-current="page" href="/admin/new">New user</a>
+                </li>
+              
+                <section>
+                  <h6>Add new user</h6>
+                </section>
 <form
         th:method="POST" th:action="@{/admin/new}" th:object="${user}">
-  <label for="username">Введите имя пользователя:</label>
-  <input type="text" th:field="*{username}" id="username"/>
-  <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
-  <br/>
+  
+  <div class="mb-2 text-center">
+    <label for="username" class="col-sm-12 col-form-label">User name</label>
+    <div class="col-12">
+      <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+    </div>
+  </div>
 
-  <p>
+
+  <div class="mb-2 text-center">
+    <label for="name" class="col-sm-12 col-form-label">First name</label>
+    <div class="col-sm-12">
+      <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    </div>
+  </div>
+
+  <div class="mb-2 text-center">
+    <label for="surname" class="col-sm-12 col-form-label">Last name</label>
+    <div class="col-sm-12">
+      <input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
+    </div>
+  </div>
+
+  <div class="mb-2 text-center">
+    <label for="email" class="col-sm-12 col-form-label">email</label>
+    <div class="col-sm-12">
+      <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+    </div>
+  </div>
+
+  <div class="mb-2 text-center">
+    <label for="password" class="col-sm-12 col-form-label">Password</label>
+    <div class="col-sm-12">
+      <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
+      <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
+    </div>
+  </div>
+
+  <div class="form-group text-center" multiple aria-label="multiple select">
+    <label for="roles">Role</label>
+    <select class="form-select" id="roles" name="roles" multiple>
+      <option th:each="role : ${roles}"
+              th:text="${role.getRole()}"
+              th:value="${role.getId()}"
+              th:field="*{roles}"></option>
+    </select>
+  </div>
+  
+  <!-- <p>
     <label>Select role:
       <input type="checkbox" name="roles"
              th:each="role : ${roles}"
@@ -24,36 +114,10 @@
              th:field="*{roles}"
       />
     </label>
-  </p>
-
-  <label for="name">Введите имя:</label>
-  <input type="text" th:field="*{name}" id="name"/>
-  <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-  <br/>
-
-  <label for="surname">Введите фамилию:</label>
-  <input type="text" th:field="*{surname}" id="surname"/>
-  <div style="color:red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Name Error</div>
-  <br/>
-
-  <label for="email">Введите email:</label>
-  <input type="text" th:field="*{email}" id="email"/>
-  <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-  <br/>
-
-  <label for="password">Введите пароль:</label>
-  <input type="password" th:field="*{password}" id="password"/>
-  <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Email Error</div>
-  <br/>
-  <input type="submit" value="Create!">
-
+  </p> -->
+  
+  <button type="button" class="btn btn-success">Add new user</button>
 </form>
-<!--  <label for="roles">Choose a role:</label>-->
-
-<!--  <select name="roles" id="roles">-->
-<!--    <option th:value="userRole">User</option>-->
-<!--  <option th:value="adminRole">Admin</option>-->
-
-<!--</select>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

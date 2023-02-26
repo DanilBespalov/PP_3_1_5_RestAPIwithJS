@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 // доступ для всех пользователей
@@ -41,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // доступ для авторизованных пользователей
 //                .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").successHandler(successUserHandler)
+                .formLogin().successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout()
