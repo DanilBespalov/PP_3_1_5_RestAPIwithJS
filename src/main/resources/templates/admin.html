@@ -48,53 +48,9 @@
                     <a class="nav-link active" aria-current="page" href="/admin.html">Users table</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/new">New user</a>
+                     <a class="nav-link" th:href="@{/admin/new}">New User</a>
                 </li>
                  
-                
-                
-                <!-- <div class="container">
-                    <div class="row row-cols-auto">
-                        <div class="col">ID</div>
-                        <div class="col">Имя</div>
-                        <div class="col">Фамилия</div>
-                        <div class="col">UserName</div>
-                        <div class="col">email</div>
-                        <div class="col">Role</div>
-                        <div class="col">Edit</div>
-                        <div class="col">Delete</div>
-                    </div>
-
-                    <div th:each="user : ${users}" class="row row-cols-auto">
-                      <div class="col">
-                        <p th:text="${user.getId()}"></p>
-                      </div>
-                      <div class="col">
-                        <p th:text="${user.getName()}"></p>
-                      </div>
-                      <div class="col">
-                        <p th:text="${user.getSurname()}"></p>
-                      </div>
-                      <div class="col">
-                        <p th:text="${user.getUsername()}"></p>
-                      </div>
-                      <div class="col">
-                        <p th:text="${user.getEmail()}"></p>
-                      </div>
-                      <div class="col">
-                        <p th:text="${user.getRoles()}"></p>
-                      </div>
-
-                      <div class="col">
-                        <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}">
-                          <button type="submit" class="btn btn-info btn-sm">Edit</button>
-                        </form>
-                      </div>
-                      <div class="col">
-                        <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
-                          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                      </div> -->
                       
                 <table class="table table-striped">
                     <thead>
@@ -120,95 +76,139 @@
                             <td th:text="${user.getRoles()}"></td>
                             <td>
                                 <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}">
-                                    <button type="submit" class="btn btn-info btn-sm">Edit</button>
-                                </form></td>
-                            <td>
-                                <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
 
-                                </form>
-                            </td>
-                        </tr>
-        </div>
-        </tbody>
-        </table>
-    </div>
-</div>
-</div>
-<!-- Modal Edit-->
-<form th:method="PUT" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
-<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editModal{{user.getId()}}">Edit</button>
+
+                                    
+                                    <div class="modal fade" id="editModal{{user.getId()}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="ModalLabel">Edit user</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form th:method="PUT" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                                                    <div class="modal-body">
+                                                        <div class="mb-2 text-center">
+                                                            <label for="username" class="col-sm-12 col-form-label">User name</label>
+                                                            <div class="col-12">
+                                                                <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
+                                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="mb-2 text-center">
+                                                            <label for="name" class="col-sm-12 col-form-label">First name</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
+                                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="mb-2 text-center">
+                                                            <label for="surname" class="col-sm-12 col-form-label">Last name</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
+                                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="mb-2 text-center">
+                                                            <label for="email" class="col-sm-12 col-form-label">email</label>
+                                                            <div class="col-sm-12">
+                                                                <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
+                                                                <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="mb-2 text-center">
+                                                            <label for="password" class="col-sm-12 col-form-label">Password</label>
+                                                            <div class="col-sm-12">
+                                                              <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
+                                                              <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
+                                                            </div>
+                                                          </div>
+                                                    </div>
+                                            
+                                                    <div class="form-group text-center" multiple aria-label="multiple select">
+                                                        <label for="roles">Role</label>
+                                                        <select class="form-select" id="roles" name="roles" multiple>
+                                                          <option th:each="role : ${roles}"
+                                                                  th:text="${role.getRole()}"
+                                                                  th:value="${role.getId()}"
+                                                                  th:field="*{roles}"></option>
+                                                        </select>
+                                                      </div>
+                                            
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                                                      <button type="button" data-toggle="modal" data-target="#myModal">Launch modal</button>
+                                            
+                                                      
+                                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                     
+
+
+<!-- Button to trigger modal
+<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editModal{{user.getId()}}">Edit</button> --> --> -->
+
+<!-- Modal Edit -->
+
+<!-- <div class="modal fade" id="editModal{{user.getId()}}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel">Edit user</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="mb-2 text-center">
-                <label for="username" class="col-sm-12 col-form-label">User name</label>
-                <div class="col-12">
-                  <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
-                  <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+        <div class="modal-content">
+            <form th:method="PUT" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-              </div>
-            
-              <div class="mb-2 text-center">
-                <label for="name" class="col-sm-12 col-form-label">First name</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
-                  <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-                </div>
-              </div>
-            
-              <div class="mb-2 text-center">
-                <label for="surname" class="col-sm-12 col-form-label">Last name</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
-                  <div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
-                </div>
-              </div>
-            
-              <div class="mb-2 text-center">
-                <label for="email" class="col-sm-12 col-form-label">email</label>
-                <div class="col-sm-12">
-                  <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
-                  <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-                </div>
-              </div>
-            
-              <div class="mb-2 text-center">
-                <label for="password" class="col-sm-12 col-form-label">Password</label>
-                <div class="col-sm-12">
-                  <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
-                  <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
-                </div>
-              </div>
-        </div>
+                <div class="modal-body">
+                    <div class="mb-2 text-center">
+                        <label for="usernameForEdit" class="col-sm-12 col-form-label">User name</label>
+                        <div class="col-12">
+                            <input type="text" class="form-control" th:field="*{username}" id="usernameForEdit" placeholder="имя пользователя">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+                        </div>
+                    </div>
 
-        <div class="form-group text-center" multiple aria-label="multiple select">
-            <label for="roles">Role</label>
-            <select class="form-select" id="roles" name="roles" multiple>
-              <option th:each="role : ${roles}"
-                      th:text="${role.getRole()}"
-                      th:value="${role.getId()}"
-                      th:field="*{roles}"></option>
-            </select>
-          </div>
+                    <div class="mb-2 text-center">
+                        <label for="name" class="col-sm-12 col-form-label">First name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                        </div>
+                    </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
-          <button type="button" data-toggle="modal" data-target="#myModal">Launch modal</button>
+                    <div class="mb-2 text-center">
+                        <label for="surname" class="col-sm-12 col-form-label">Last name</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
+                        </div>
+                    </div>
 
-          
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
+                    <div class="mb-2 text-center">
+                        <label for="email" class="col-sm-12 col-form-label">email</label>
+                        <div class="col-sm-12">
+                            <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors
+ --> -->
+
+
+
+
+
+
+
+
 <!-- Modal Delete-->
 <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">

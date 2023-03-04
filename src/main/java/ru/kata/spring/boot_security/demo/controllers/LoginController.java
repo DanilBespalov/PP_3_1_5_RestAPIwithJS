@@ -12,10 +12,10 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginForm(Model model) {
 
-            model.addAttribute("user", new User());
+
             return "login";
         }
-    @PostMapping("/process_login")
+    @PostMapping("/login")
     public String processLogin() {
         return "redirect:/";
     }
