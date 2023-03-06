@@ -15,12 +15,15 @@
         <div class="row align-items-center">
             <div class="p-3 mb-2 text-white col-10">
                 Logged in as:
-                <div th:each="user : ${users}">
-                    <span th:text="${user.getName()}"></span> with role(s):
-                    <span th:each="role : ${user.getRoles()}" th:text="${#strings.listSubstringAfter(role, 'ROLE_')}"></span>
+                    <span th:text="${#authentication.getName()}"></span> with role(s):
+                    <!-- <span th:each="role : ${user.getRoles()}" th:text="${#strings.listSubstringAfter(role, 'ROLE_')}"></span> -->
+                   
+                    <span th:each="role : ${#authentication.getAuthorities()}" th:text="${role.getAuthority().replace('ROLE_', '')}"></span>
+
+                    <!-- <span th:each="role : ${user.getRoles()}" th:text="${role.getRole().replace('ROLE_', '')}"></span> -->
+
                 </div>                
-            </div>
-            <div class="col-2 text-white d-flex justify-content-end align-items-center">
+            <div class="col d-flex text-white justify-content-end">
                 <form th:method="POST" th:action="@{/logout}">
                     <button type="submit" class="btn btn-secondary">Logout</button>
                 </form>
@@ -74,10 +77,12 @@
                             <td th:text="${user.getSurname()}"></td>
                             <td th:text="${user.getUsername()}"></td>
                             <td th:text="${user.getEmail()}"></td>
-                            <td th:text="${user.getRoles()}"></td>
+                            <td>
+                                <span th:each="role : ${user.getRoles()}" th:text="${role.getRole().replace('ROLE_', '')}"></span>
+                            </td>
                             <td>
                                 <!-- <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}"> -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
+                                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#editModal">
                                         Edit
                                     </button>
                                     
@@ -85,7 +90,7 @@
                             </td>
                             <td>
                                 <!-- <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}"> -->
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                                    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
                                         Delete
                                       </button>
                                 </form>
@@ -105,7 +110,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form th:method="POST" th:action="@{/admin/edit}">
+            <form th:method="POST" th:action="@{/admin/edit}/{id}(id=${user.getId()})}">
                     Edit 
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
@@ -127,8 +132,10 @@
                 </button>
               </div>
               <div class="modal-body">
+                <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
                 delete user
               </div>
+            </form>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-danger">Delete</button>
