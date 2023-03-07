@@ -110,7 +110,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form th:method="POST" th:action="@{/admin/edit}/{id}(id=${user.getId()})}">
+            <form th:method="POST" th:action="@{/admin/edit{id}(id=${user.getId()})}">
                     Edit 
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
@@ -119,7 +119,6 @@
 </div>
 </div>
                             
-
 
 <!-- Modal Delete-->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -132,7 +131,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                <form th:method="DELETE" th:action="@{/admin/delete{id}(id=${user.getId()})}">
                 delete user
               </div>
             </form>
