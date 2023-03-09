@@ -59,10 +59,10 @@
               
 <form
         th:method="POST" th:action="@{/admin/new}" th:object="${user}">
-  
+  <div class="text-center align-items-center">
   <div class="mb-2 text-center">
-    <label for="username" class="col-sm-12 col-form-label">User name</label>
-    <div class="col-12">
+    <label for="username" class="col-sm-6 col-form-label">User name</label>
+    <div class="col-6 text-center">
       <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
       <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
     </div>
@@ -70,32 +70,32 @@
 
 
   <div class="mb-2 text-center">
-    <label for="name" class="col-sm-12 col-form-label">First name</label>
-    <div class="col-sm-12">
+    <label for="name" class="col-sm-6 col-form-label">First name</label>
+    <div class="col-sm-6 text-center">
       <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
       <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
     </div>
   </div>
 
   <div class="mb-2 text-center">
-    <label for="surname" class="col-sm-12 col-form-label">Last name</label>
-    <div class="col-sm-12">
+    <label for="surname" class="col-sm-6 col-form-label">Last name</label>
+    <div class="col-sm-6 text-center">
       <input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
       <div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
     </div>
   </div>
 
   <div class="mb-2 text-center">
-    <label for="email" class="col-sm-12 col-form-label">email</label>
-    <div class="col-sm-12">
+    <label for="email" class="col-sm-6 col-form-label">email</label>
+    <div class="col-sm-6 text-center">
       <input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
       <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
     </div>
   </div>
 
   <div class="mb-2 text-center">
-    <label for="password" class="col-sm-12 col-form-label">Password</label>
-    <div class="col-sm-12">
+    <label for="password" class="col-sm-6 col-form-label">Password</label>
+    <div class="col-sm-6 text-center">
       <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
       <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
     </div>
@@ -103,12 +103,14 @@
 
   <div class="form-group text-center" multiple aria-label="multiple select">
     <label for="roles">Role</label>
+    <div class="col-sm-6 text-center mb-2">
     <select class="form-select" id="roles" name="roles" multiple>
       <option th:each="role : ${roles}"
               th:text="${role.getRole()}"
               th:value="${role.getId()}"
               th:field="*{roles}"></option>
     </select>
+    </div>
   </div>
   
   <!-- <p>
@@ -121,8 +123,8 @@
       />
     </label>
   </p> -->
-  
   <button type="submit" class="btn btn-success">Add new user</button>
+  </div>
 </form>
         </div>
       </div>
