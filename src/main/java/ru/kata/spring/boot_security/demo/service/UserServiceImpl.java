@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -59,12 +63,20 @@ public class UserServiceImpl implements UserService {
             userFromRep.setName(user.getName());
             userFromRep.setSurname(user.getSurname());
             userFromRep.setUsername(user.getUsername());
-            userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+            logger.info("Before password update: {}", userFromRep.getPassword());
+
+            if (!bCryptPasswordEncoder.matches(user.getPassword(), userFromRep.getPassword())) {
+                userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            }
+
+            logger.info("After password update: {}", userFromRep.getPassword());
             userFromRep.setEmail(user.getEmail());
             userFromRep.setRoles(user.getRoles());
 
             userRepository.save(userFromRep);
-        } else {
+
+    } else {
             throw new UsernameNotFoundException(String.format("User %s with %s not found", user, id));
         }
 
