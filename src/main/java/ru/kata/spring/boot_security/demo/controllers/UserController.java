@@ -18,8 +18,8 @@ import java.security.Principal;
 @RequestMapping()
 public class UserController {
 
-    private UserServiceImpl userService;
-    private RoleServiceImpl roleService;
+    private final UserServiceImpl userService;
+    private final RoleServiceImpl roleService;
 
     @Autowired
     public UserController(UserServiceImpl userService, RoleServiceImpl roleService) {
@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("/user")
     public String showUserInfo(Model model, Principal principal) {
-        model.addAttribute("user", userService.getUserByUsername(principal.getName()));
+        model.addAttribute("user", userService.getUserByEmail(principal.getName()));
         return "user";
     }
 
