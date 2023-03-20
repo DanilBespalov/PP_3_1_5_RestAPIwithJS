@@ -65,14 +65,10 @@ public class UserServiceImpl implements UserService {
             userFromRep.setSurname(user.getSurname());
             userFromRep.setUsername(user.getUsername());
 
-            logger.info("Before password update: {}", userFromRep.getPassword());
-
             if (user.getPassword().isEmpty()) {
                 userFromRep.setPassword(getUserById(id).getPassword());
             }
             userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-            logger.info("After password update: {}", userFromRep.getPassword());
             userFromRep.setEmail(user.getEmail());
 
             if (user.getRoles() != null && !user.getRoles().isEmpty()) {
