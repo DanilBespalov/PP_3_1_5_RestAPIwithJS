@@ -18,7 +18,6 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 @RequestMapping("/admin")
 public class AdminController {
 
-
     private final UserServiceImpl userService;
     private final RoleServiceImpl roleService;
 
@@ -57,6 +56,14 @@ public class AdminController {
         model.addAttribute("user", userById);
         model.addAttribute("roles", roleService.getRoles());
         return "edit";
+    }
+
+    @GetMapping("/user/{id}")
+    public String userInfo(@PathVariable("id") Long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getRoles());
+        return "user";
     }
 
     @PutMapping("/edit/{id}")

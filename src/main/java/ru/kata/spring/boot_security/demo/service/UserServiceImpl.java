@@ -49,8 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getUserByEmail(String username) {
-        return userRepository.getUserByEmail(username);
+    public Optional<User> getUserByEmail(String email) {
+
+        return userRepository.getUserByEmail(email);
     }
 
     @Override
@@ -66,13 +67,17 @@ public class UserServiceImpl implements UserService {
 
             logger.info("Before password update: {}", userFromRep.getPassword());
 
-            if (!bCryptPasswordEncoder.matches(user.getPassword(), userFromRep.getPassword())) {
-                userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            if (user.getPassword().isEmpty()) {
+                userFromRep.setPassword(getUserById(id).getPassword());
             }
+            userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
             logger.info("After password update: {}", userFromRep.getPassword());
             userFromRep.setEmail(user.getEmail());
-            userFromRep.setRoles(user.getRoles());
+
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                userFromRep.setRoles(user.getRoles());
+            }
 
             userRepository.save(userFromRep);
 

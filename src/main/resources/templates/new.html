@@ -34,10 +34,10 @@
         <div class="col-2">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/admin.html">Admin</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/admin}">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user.html">User</a>
+                    <a class="nav-link" th:href="@{/user}">User</a>
                 </li>
             </ul>
         </div>
@@ -47,7 +47,7 @@
 
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin.html">Users table</a>
+                    <a class="nav-link" th:href="@{/admin}">Users table</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/admin/new">New user</a>

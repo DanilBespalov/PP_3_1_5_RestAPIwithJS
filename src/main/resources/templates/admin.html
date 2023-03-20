@@ -50,7 +50,7 @@
 
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/admin">Users table</a>
+                    <a class="nav-link active" aria-current="page" th:href="@{/admin}">Users table</a>
                 </li>
                 <li class="nav-item">
                      <a class="nav-link" th:href="@{/admin/new}">New User</a>
@@ -130,9 +130,8 @@
                                                 </div>
 
                                                 <div class="row mb-2">
-                                                  <input type="hidden" th:name="password" th:value="${userThis.getPassword()}" id="hidden_pass">
                                                   <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-1" for="passwordUpdate">Password</label>
-                                                  <input class="form-control d-flex justify-content-center" type="password" th:name="password" id="passwordUpdate">
+                                                  <input class="form-control d-flex justify-content-center" type="password" id="passwordUpdate" th:name="password" value="">
                                                   <!-- <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Имя ошибки</div> -->
                                                 </div>
 
