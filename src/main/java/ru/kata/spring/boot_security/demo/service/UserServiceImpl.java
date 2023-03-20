@@ -53,30 +53,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(Long id, User user) {
-        Optional<User> userToUpd = userRepository.findById(id);
-        if (userToUpd.isPresent()) {
-            User userFromRep = userToUpd.get();
-            userFromRep.setId(id);
-            userFromRep.setName(user.getName());
-            userFromRep.setSurname(user.getSurname());
-            userFromRep.setUsername(user.getUsername());
 
-            if (user.getPassword().isEmpty()) {
-                userFromRep.setPassword(getUserById(id).getPassword());
-            }
-            userFromRep.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            userFromRep.setEmail(user.getEmail());
-
-            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
-                userFromRep.setRoles(user.getRoles());
-            }
-
-            userRepository.save(userFromRep);
-
-    } else {
-            throw new UsernameNotFoundException(String.format("User %s with %s not found", user, id));
+        if (user.getPassword().isEmpty()) {
+            user.setPassword(getUserById(id).getPassword());
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
-
+            userRepository.save(user);
     }
 
     @Override
