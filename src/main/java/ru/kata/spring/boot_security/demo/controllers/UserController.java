@@ -51,7 +51,7 @@ public class UserController {
     @GetMapping("/user")
     public String showUserInfo(Model model, Principal principal) {
         model.addAttribute("user", userService.getUserByEmail(principal.getName()));
-        return "user";
+        return "userInfo";
     }
 
 }

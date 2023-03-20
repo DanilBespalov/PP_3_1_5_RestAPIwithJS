@@ -6,13 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -58,15 +61,15 @@ public class AdminController {
         return "edit";
     }
 
-    @GetMapping("/user/{id}")
-    public String userInfo(@PathVariable("id") Long id, Model model) {
-        User user = userService.getUserById(id);
+    @GetMapping("/user")
+    public String userInfo(Model model, Principal principal) {
+        Optional<User> user = userService.getUserByEmail(principal.getName());
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getRoles());
         return "user";
     }
 
-    @PutMapping("/edit/{id}")
+    @PatchMapping("/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.updateUser(id, user);
         return "redirect:/admin";
