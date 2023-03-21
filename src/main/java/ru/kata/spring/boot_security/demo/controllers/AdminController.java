@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
-
-import java.security.Principal;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -62,10 +60,8 @@ public class AdminController {
     }
 
     @GetMapping("/user")
-    public String userInfo(Model model, Principal principal) {
-        Optional<User> user = userService.getUserByEmail(principal.getName());
+    public String userInfo(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", user);
-        model.addAttribute("roles", roleService.getRoles());
         return "user";
     }
 
