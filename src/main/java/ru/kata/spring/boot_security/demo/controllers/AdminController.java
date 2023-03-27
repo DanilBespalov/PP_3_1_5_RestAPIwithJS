@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
-@Controller
-@RequestMapping("/admin")
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/admin")
 public class AdminController {
 
     private final UserServiceImpl userService;
@@ -29,10 +37,11 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String adminPage(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("roles", roleService.getRoles());
-        return "admin";
+    @ResponseBody
+    public List<User> adminPage() {
+        List<User> response = userService.getAllUsers();
+        roleService.getRoles();
+        return response;
     }
 
     @GetMapping("/new")
