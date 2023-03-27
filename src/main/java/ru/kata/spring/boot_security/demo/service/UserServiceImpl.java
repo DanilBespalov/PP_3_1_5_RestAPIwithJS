@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return user;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Long id, User user) {
+    public User updateUser(Long id, User user) {
 
         if (user.getPassword().isEmpty()) {
             user.setPassword(getUserById(id).getPassword());
@@ -60,12 +61,14 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         }
             userRepository.save(user);
+        return user;
     }
 
     @Override
     @Transactional
-    public void removeUser(Long id) {
+    public User removeUser(Long id) {
         userRepository.deleteById(id);
+        return null;
     }
 
 }
