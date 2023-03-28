@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
-import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
+import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
 
@@ -22,11 +23,11 @@ import java.util.List;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    private final UserServiceImpl userService;
-    private final RoleServiceImpl roleService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -41,6 +42,11 @@ public class AdminController {
             return ResponseEntity.ok(users);
         }
     }
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getRoles() {
+        List<Role> roles = roleService.getRoles();
+        return ResponseEntity.ok(roles);
+    }
 
 //    @GetMapping("/new")
 //    public String getUserCreateForm(@ModelAttribute("user") User user,Model model) {
@@ -53,6 +59,7 @@ public class AdminController {
 
     @PostMapping("/new")
     public ResponseEntity<User> createUser(@RequestBody User user) {
+
         User createdUser = userService.saveUser(user);
 
         if (createdUser == null) {
