@@ -158,85 +158,86 @@
                                     </td>
 
                                     <td><a class="btn btn-danger" data-bs-toggle="modal" th:href="${'#delModal'+ userThis.getId()}">Delete</a>
-
-                                      <!-- Модальное окно для удаления -->
-
-                                      <div class="modal fade" th:id="${'delModal'+ userThis.getId()}" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="delModalLabel">Delete user</h5>
-                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                            </div>
-                                            <div class="modal-body d-flex justify-content-center">
-
-                                              <!-- Форма удаления Юзера -->
-
-                                              <form class="form w-50 mt-4 mb-4" th:method="DELETE" th:action="@{/api/admin/delete/{id}(id=${userThis.getId()})}" th:object="${user}" th:id="${'formDel'+ userThis.getId()}">
-                                                <div class="row mb-2">
-                                                  <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-0" for="idDel">ID</label>
-                                                  <input class="form-control d-flex justify-content-center" type="text"  th:name="id" th:value="${userThis.getId()}" id="idDel" disabled>
-                                                  <!-- <div style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Имя ошибки</div> -->
-                                                </div>
-
-                                                <div class="row mb-2">
-                                                  <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-0" for="nameDel">First name</label>
-                                                  <input class="form-control d-flex justify-content-center" type="text"  th:name="name" th:value="${userThis.getName()}" id="nameDel" disabled>
-                                                  <!-- <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Имя ошибки</div> -->
-                                                </div>
-
-                                                <div class="row mb-2">
-                                                  <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-0" for="lastnameDel">Last name</label>
-                                                  <input class="form-control d-flex justify-content-center" type="text" th:name="surname" th:value="${userThis.getSurname()}" id="lastnameDel" disabled>
-                                                  <!-- <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Имя ошибки</div> -->
-                                                </div>
-                                                
-                                                <div class="row mb-2">
-                                                    <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-0" for="userNameDel">User name</label>
-                                                    <input class="form-control d-flex justify-content-center" type="text"  th:name="username" th:value="${userThis.getUsername()}" id="userNameDel" disabled>
-                                                    <!-- <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Имя ошибки</div> -->
-                                                </div>
-                                            
-                                                <!-- <div class="row mb-2">
-                                                  <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-0" for="ageDel">Age</label>
-                                                  <input class="form-control d-flex justify-content-center" type="number"  min="1" max="125" th:name="age" th:value="${userThis.getAge()}" id="ageDel" disabled>
-                                                  <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Имя ошибки</div>
-                                                </div> -->
-
-                                                <div class="row mb-2">
-                                                  <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-1" for="emailDel">Email</label>
-                                                  <input class="form-control d-flex justify-content-center" type="email" th:name="email" th:value="${userThis.getEmail()}" id="emailDel" disabled>
-                                                  <!-- <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Имя ошибки</div> -->
-                                                </div>
-                                                
-                                                <div class="row mb-2">
-                                                  <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-1" for="passwordDel">Password</label>
-                                                  <input class="form-control d-flex justify-content-center" type="password" th:name="password"id="passwordDel" disabled>
-                                                  <!-- <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Имя ошибки</div> -->
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <label class="form-label d-flex justify-content-center fw-bold fs-5 mb-1" for="selectDelRole">Role</label>
-                                                    <select class="form-select" aria-label="Default select" name="roles" size="2" multiple id="selectDelRole" disabled>
-                                                      <option th:each="role : ${roles}" th:text="${role.getRole().replace('ROLE_', ' ')}" th:value="${role.id}"></option>
-                                                    </select>
-                                                  </div>                                                                                               
-                                              </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                              <input th:form="${'formDel'+ userThis.getId()}" class="btn btn-danger" type="submit" value="Delete">
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
                                     </td>
                                   </tr>
                                   </tbody>
                                 </table>
     </div>  
-</div> 
-</div>  
-<script src="/static/code.js"></script>
+  <!-- Модальное окно для создания нового пользователя -->
+
+  <div id="modalNew" class="modal fade" th:id="${'newModal'}" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newModalLabel">New user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+
+<form>
+<div class="mb-2 text-center">
+<label for="username" class="col-sm-6 col-form-label">User name</label>
+<div class="col-6 mx-auto d-flex">
+<input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+</div>
+</div>
+
+
+<div class="mb-2 text-center">
+<label for="name" class="col-sm-6 col-form-label">First name</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+</div>
+</div>
+
+<div class="mb-2 text-center">
+<label for="surname" class="col-sm-6 col-form-label">Last name</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
+</div>
+</div>
+
+<div class="mb-2 text-center">
+<label for="email" class="col-sm-6 col-form-label">email</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+</div>
+</div>
+
+<div class="mb-2 text-center">
+<label for="password" class="col-sm-6 col-form-label">Password</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
+</div>
+</div>
+
+<div class="form-group text-center" multiple aria-label="multiple select">
+<label for="roles">Role</label>
+<div class="col-sm-6 mx-auto d-flex mb-2">
+<select class="form-select" id="roles" name="roles" multiple>
+<option th:each="role : ${roles}"
+      th:text="${role.getRole()}"
+      th:value="${role.getId()}"
+      th:field="*{roles}"></option>
+</select>
+</div>
+</div>
+<button type="submit" class="btn btn-success mx-auto d-flex">Add new user</button>
+
+</form>
+      </div> 
+    </div> 
+  </div>
+</div>
+</div>
+</div>
+ 
+<script src="/code.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

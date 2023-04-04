@@ -4,7 +4,7 @@ const container = document.querySelector('tbody')
 let resultData = ''
 
 const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
-const formEdit = document.querySelector('.formEdit')
+const formEdit = document.querySelector('.form')
 const idUpdate = document.getElementById('idUpdate')
 const userNameUpdate = document.getElementById('userNameUpdate')
 const nameUpdate = document.getElementById('nameUpdate')
