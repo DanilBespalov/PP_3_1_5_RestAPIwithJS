@@ -1,33 +1,152 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <title>Fetch API</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
 </head>
 <body>
-<h1>Welcome to Index PAGE!</h1>
+    <button id="btnCreate">Create User</button> 
+    <div class="class1">Class1</div>
+
+    <script>
+       let tag = document.getElementById('btnCreate')
+        console.log(document.querySelector('.class1'))
+        btnCreate.addEventListener('mouseover', (e) => {alert('EVENTO')})
+    </script>
+
 <style>
-    body{background-color: #d7d7d7;}
-</style>
-<br/>
-<div class="container">
-    <div class="row"></div>
-        <div class="col-12"></div>
-            <h1 class="text-center text-black">Bootstrap</h1>
+    table thead{background-color: lightgray; color: black;}
+  </style>
+  
+
+  <div class="container-fluid">
+      <div class="row align-items-center">
+          <div class="col-2">
+              <ul class="nav flex-column">
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/api/admin">Admin</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" th:href="@{/api/admin/user}">User</a>
+                  </li>
+              </ul>
+          </div>
+          <div class="col-10 bg-light">
+              <h1>Admin panel </h1>
+  
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" th:href="@{/api/admin}">Users table</a>
+                  </li>
+                  <li class="nav-item">
+                       <a class="nav-link" th:href="@{/api/admin/new}">New User</a>
+                  </li>
+              </ul>
+                   
+                  <table class="table table-striped">
+                      <thead>
+                      <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Имя</th>
+                          <th scope="col">Фамилия</th>
+                          <th scope="col">UserName</th>
+                          <th scope="col">email</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Edit</th>
+                          <th scope="col">Delete</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                          
 
 
-    <button type="button" class="btn btn-primary btn-lg">
-        <a href="/login">Login</a>
-    </button>
-<br/>
-<br/>
-    <button type="button" class="btn btn-secondary btn-lg">
-        <a href="/registration">Registration</a>
-    </button>
+                                 <!-- Модальное окно для создания нового пользователя -->
+
+  <div id="modalNew" class="modal fade" th:id="${'newModal'}" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newModalLabel">New user</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+
+<form>
+<div class="mb-2 text-center">
+<label for="username" class="col-sm-6 col-form-label">User name</label>
+<div class="col-6 mx-auto d-flex">
+<input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
+<div class="mb-2 text-center">
+<label for="name" class="col-sm-6 col-form-label">First name</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+</div>
+</div>
+
+<div class="mb-2 text-center">
+<label for="surname" class="col-sm-6 col-form-label">Last name</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
+</div>
+</div>
+
+<div class="mb-2 text-center">
+<label for="email" class="col-sm-6 col-form-label">email</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+</div>
+</div>
+
+<div class="mb-2 text-center">
+<label for="password" class="col-sm-6 col-form-label">Password</label>
+<div class="col-sm-6 mx-auto d-flex">
+<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
+<div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
+</div>
+</div>
+
+<div class="form-group text-center" multiple aria-label="multiple select">
+<label for="roles">Role</label>
+<div class="col-sm-6 mx-auto d-flex mb-2">
+<select class="form-select" id="roles" name="roles" multiple>
+<option th:each="role : ${roles}"
+      th:text="${role.getRole()}"
+      th:value="${role.getId()}"
+      th:field="*{roles}"></option>
+</select>
+</div>
+</div>
+<button type="submit" class="btn btn-success mx-auto d-flex">Add new user</button>
+
+</form>
+      </div> 
+    </div> 
+  </div>
+  </div>
+                         
+                      </tbody>
+                  </table>
+          </div>
+      </div>
+  </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="/code.js"></script>
+<script src="/modal.js"></script>
 
 </body>
 </html>
