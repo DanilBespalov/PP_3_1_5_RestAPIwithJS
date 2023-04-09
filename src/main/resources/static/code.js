@@ -62,4 +62,3 @@ fetch(url)
     .then(response => response.json())
     .then(data => dataShow(data))
     .catch(error => console.log(error))
-
