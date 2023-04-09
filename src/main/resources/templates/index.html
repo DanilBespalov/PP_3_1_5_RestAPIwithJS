@@ -8,6 +8,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 </head>
+
+
+<header class="bg-dark" style="height: 60px;">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="p-3 mb-2 text-white col-10">
+                Logged in as:
+                    <span th:text="${#authentication.getName()}"></span> with role(s):
+                   
+                    <span th:each="role : ${#authentication.getAuthorities()}" th:text="${role.getAuthority().replace('ROLE_', ' ')}"></span>
+
+
+                </div>                
+            <div class="col d-flex text-white justify-content-end">
+                <form th:method="POST" th:action="@{/logout}">
+                    <button type="submit" class="btn btn-secondary">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
 <body>
     <button id="btnCreate">Create User</button> 
     <div class="class1">Class1</div>
@@ -46,7 +68,6 @@
                        <a class="nav-link" th:href="@{/api/admin/new}">New User</a>
                   </li>
               </ul>
-                   
                   <table class="table table-striped">
                       <thead>
                       <tr>
@@ -61,86 +82,79 @@
                       </tr>
                       </thead>
                       <tbody>
-                          
-
-
-                                 <!-- Модальное окно для создания нового пользователя -->
-
-  <div id="modalNew" class="modal fade" th:id="${'newModal'}" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="newModalLabel">New user</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-        </div>
-        <div class="modal-body d-flex justify-content-center">
-
-<form>
-<div class="mb-2 text-center">
-<label for="username" class="col-sm-6 col-form-label">User name</label>
-<div class="col-6 mx-auto d-flex">
-<input type="text" class="form-control" th:field="*{username}" id="username" placeholder="имя пользователя">
-<div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
-</div>
-</div>
-
-
-<div class="mb-2 text-center">
-<label for="name" class="col-sm-6 col-form-label">First name</label>
-<div class="col-sm-6 mx-auto d-flex">
-<input type="text" class="form-control" th:field="*{name}" id="name" placeholder="имя">
-<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-</div>
-</div>
-
-<div class="mb-2 text-center">
-<label for="surname" class="col-sm-6 col-form-label">Last name</label>
-<div class="col-sm-6 mx-auto d-flex">
-<input type="text" class="form-control" th:field="*{surname}" id="surname" placeholder="фамилия">
-<div class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Last name Error</div>
-</div>
-</div>
-
-<div class="mb-2 text-center">
-<label for="email" class="col-sm-6 col-form-label">email</label>
-<div class="col-sm-6 mx-auto d-flex">
-<input type="email" class="form-control" th:field="*{email}" id="email" placeholder="email">
-<div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-</div>
-</div>
-
-<div class="mb-2 text-center">
-<label for="password" class="col-sm-6 col-form-label">Password</label>
-<div class="col-sm-6 mx-auto d-flex">
-<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="введите пароль">
-<div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{email}">Password Error</div>
-</div>
-</div>
-
-<div class="form-group text-center" multiple aria-label="multiple select">
-<label for="roles">Role</label>
-<div class="col-sm-6 mx-auto d-flex mb-2">
-<select class="form-select" id="roles" name="roles" multiple>
-<option th:each="role : ${roles}"
-      th:text="${role.getRole()}"
-      th:value="${role.getId()}"
-      th:field="*{roles}"></option>
-</select>
-</div>
-</div>
-<button type="submit" class="btn btn-success mx-auto d-flex">Add new user</button>
-
-</form>
-      </div> 
-    </div> 
-  </div>
-  </div>
-                         
+            
                       </tbody>
                   </table>
           </div>
       </div>
   </div>
+
+        <!-- Модальное окно для создания нового пользователя -->
+
+        <!-- <div id="modalNew" class="modal fade" th:id="${'newModal'}" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="newModalLabel">New user</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+        
+        <form>
+        <div class="mb-2 text-center">
+        <label for="username" class="col-sm-6 col-form-label">User name</label>
+        <div class="col-6 mx-auto d-flex">
+        <input type="text" class="form-control" id="username" placeholder="имя пользователя">
+        </div>
+        </div>
+        
+        
+        <div class="mb-2 text-center">
+        <label for="name" class="col-sm-6 col-form-label">First name</label>
+        <div class="col-sm-6 mx-auto d-flex">
+        <input type="text" class="form-control" id="name" placeholder="имя">
+        </div>
+        </div>
+        
+        <div class="mb-2 text-center">
+        <label for="surname" class="col-sm-6 col-form-label">Last name</label>
+        <div class="col-sm-6 mx-auto d-flex">
+        <input type="text" class="form-control" id="surname" placeholder="фамилия">
+        </div>
+        </div>
+        
+        <div class="mb-2 text-center">
+        <label for="email" class="col-sm-6 col-form-label">email</label>
+        <div class="col-sm-6 mx-auto d-flex">
+        <input type="email" class="form-control" id="email" placeholder="email">
+        </div>
+        </div>
+        
+        <div class="mb-2 text-center">
+        <label for="password" class="col-sm-6 col-form-label">Password</label>
+        <div class="col-sm-6 mx-auto d-flex">
+        <input type="password" class="form-control" id="password" placeholder="введите пароль">
+        </div>
+        </div>
+        
+        <div class="form-group text-center" multiple aria-label="multiple select">
+        <label for="roles">Role</label>
+        <div class="col-sm-6 mx-auto d-flex mb-2">
+        <select class="form-select" id="roles" name="roles" multiple>
+        <option th:each="role : ${roles}"
+              th:text="${role.getRole()}"
+              th:value="${role.getId()}"
+              th:field="*{roles}"></option>
+        </select>
+        </div>
+        </div>
+        <button type="submit" class="btn btn-success mx-auto d-flex">Add new user</button>
+        
+        </form>
+              </div> 
+            </div> 
+          </div>
+          </div> -->
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
