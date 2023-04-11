@@ -10,6 +10,7 @@ const container = document.querySelector('tbody')
 let resultData = ''
 
 // const modalNew = new bootstrap.Modal(document.getElementById('modalNew'))
+
 const formCreate = document.querySelector('.form')
 const id = document.getElementById('id')
 const userName = document.getElementById('username')
@@ -62,3 +63,47 @@ fetch(url)
     .then(response => response.json())
     .then(data => dataShow(data))
     .catch(error => console.log(error))
+
+
+//Edit button
+container.addEventListener('click', (event) => {
+    if (event.target.classList.contains('btnEdit')) {
+        const row = event.target.closest('tr')
+        const id = row.querySelector('td:first-child').textContent
+        
+        alertify.confirm("This is a confirm dialog.",
+        function(){
+        alertify.success('Изменения сохранены')
+        },
+        function(){
+        alertify.error('Cancel')
+        })
+    }
+});
+
+//Delete button
+deleteEvent(document, 'click', '.btnDelete', e =>{
+    const row = e.target.parentNode.parentNode
+    const id = row.firstElementChild.innerHTML
+    console.log(row)
+    console.log(id)
+    alertify.confirm("This is a confirm dialog.",
+        function(){
+        alertify.success('Изменения сохранены')
+        },
+        function(){
+        alertify.error('Cancel')
+        });    
+})
+
+// Funtion for delete 
+function deleteEvent(element, eventType, selector, handler) {
+    element.addEventListener(eventType, function(event) {
+        const targetElement = event.target.closest(selector);
+        if (targetElement && element.contains(targetElement)) {
+            handler(event);
+        }
+    });
+}
+
+  
