@@ -11,7 +11,7 @@ let resultData = ''
 
 // const modalNew = new bootstrap.Modal(document.getElementById('modalNew'))
 
-// const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
+const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
 
 const formCreate = document.querySelector('.form')
 const id = document.getElementById('id')
@@ -24,17 +24,17 @@ const roles = document.getElementById('roles')
 let option = ''
 
 // Edit button event 
-// btnEdit.addEventListener('click', ()=>{
-//     id.value = ''
-//     userName.value = ''
-//     name.value = ''
-//     surname.value = ''
-//     email.value = ''
-//     password.value = ''
-//     roles.value = ''
-//     modalEdit.show()
-//     option = 'edit'
-// })
+btnEdit.addEventListener('click', ()=>{
+    id.value = ''
+    userName.value = ''
+    name.value = ''
+    surname.value = ''
+    email.value = ''
+    password.value = ''
+    roles.value = ''
+    modalEdit.show()
+    option = 'edit'
+})
 
 
 //function dataShow
@@ -112,7 +112,7 @@ on(document, 'click', '.btnDelete', e =>{
         });    
 })
 
-// Funсtion for editForm and delete 
+// Funсtion for forms and buttons
 function on(element, eventType, selector, handler) {
     element.addEventListener(eventType, function(event) {
         const targetElement = event.target.closest(selector);
