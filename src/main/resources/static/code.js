@@ -11,7 +11,7 @@ let resultData = ''
 
 // const modalNew = new bootstrap.Modal(document.getElementById('modalNew'))
 
-const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
+// const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
 
 const formCreate = document.querySelector('.form')
 const id = document.getElementById('id')
@@ -24,17 +24,17 @@ const roles = document.getElementById('roles')
 let option = ''
 
 // Edit button event 
-btnEdit.addEventListener('click', ()=>{
-    id.value = ''
-    userName.value = ''
-    name.value = ''
-    surname.value = ''
-    email.value = ''
-    password.value = ''
-    roles.value = ''
-    modalEdit.show()
-    option = 'edit'
-})
+// btnEdit.addEventListener('click', ()=>{
+//     id.value = ''
+//     userName.value = ''
+//     name.value = ''
+//     surname.value = ''
+//     email.value = ''
+//     password.value = ''
+//     roles.value = ''
+//     modalEdit.show()
+//     option = 'edit'
+// })
 
 
 //function dataShow
@@ -45,9 +45,9 @@ const dataShow = (elements) => {
         resultData +=`
     <tr>
         <td>${element.id}</td>
-        <td>${element.username}</td>
         <td>${element.name}</td>
-        <td>${element.surname}</td>
+        <td>${element.surname }</td>
+        <td>${element.username}</td>
         <td>${element.email}</td>
         <td>${rolesName}</td>
         <td>
@@ -84,8 +84,22 @@ container.addEventListener('click', (event) => {
     }
 });
 
+// Edit form
+let idForm = 0
+on(document, 'click', 'btnEdit', e =>{
+    const row = e.target.parentNode.parentNode
+    idForm = row.children[0].innerHTML
+    const nameForm = row.children[1].innerHTML
+    const surnameForm = row.children[3].innerHTML
+    const usernameForm = row.children[4].innerHTML
+    const emailForm = row.children[5].innerHTML
+    const rolesForm = row.children[6].innerHTML
+})
+
+
+
 //Delete button
-deleteEvent(document, 'click', '.btnDelete', e =>{
+on(document, 'click', '.btnDelete', e =>{
     const row = e.target.parentNode.parentNode
     const id = row.firstElementChild.innerHTML
 
@@ -98,8 +112,8 @@ deleteEvent(document, 'click', '.btnDelete', e =>{
         });    
 })
 
-// Funсtion for delete 
-function deleteEvent(element, eventType, selector, handler) {
+// Funсtion for editForm and delete 
+function on(element, eventType, selector, handler) {
     element.addEventListener(eventType, function(event) {
         const targetElement = event.target.closest(selector);
         if (targetElement && element.contains(targetElement)) {
