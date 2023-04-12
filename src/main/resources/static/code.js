@@ -11,6 +11,8 @@ let resultData = ''
 
 // const modalNew = new bootstrap.Modal(document.getElementById('modalNew'))
 
+const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
+
 const formCreate = document.querySelector('.form')
 const id = document.getElementById('id')
 const userName = document.getElementById('username')
@@ -21,8 +23,8 @@ const password = document.getElementById('password')
 const roles = document.getElementById('roles')
 let option = ''
 
-// Create button event
-btnCreate.addEventListener('click', ()=>{
+// Edit button event 
+btnEdit.addEventListener('click', ()=>{
     id.value = ''
     userName.value = ''
     name.value = ''
@@ -30,9 +32,10 @@ btnCreate.addEventListener('click', ()=>{
     email.value = ''
     password.value = ''
     roles.value = ''
-    modalNew.show()
-    option = 'create'
+    modalEdit.show()
+    option = 'edit'
 })
+
 
 //function dataShow
 const dataShow = (elements) => {
@@ -85,18 +88,17 @@ container.addEventListener('click', (event) => {
 deleteEvent(document, 'click', '.btnDelete', e =>{
     const row = e.target.parentNode.parentNode
     const id = row.firstElementChild.innerHTML
-    console.log(row)
-    console.log(id)
+
     alertify.confirm("This is a confirm dialog.",
         function(){
-        alertify.success('Изменения сохранены')
+        alertify.success('Пользователь удален')
         },
         function(){
         alertify.error('Cancel')
         });    
 })
 
-// Funtion for delete 
+// Funсtion for delete 
 function deleteEvent(element, eventType, selector, handler) {
     element.addEventListener(eventType, function(event) {
         const targetElement = event.target.closest(selector);
