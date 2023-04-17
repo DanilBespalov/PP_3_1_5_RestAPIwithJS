@@ -11,7 +11,7 @@ let resultData = ''
 
 // const modalNew = new bootstrap.Modal(document.getElementById('modalNew'))
 
-const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
+// const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
 
 const formCreate = document.querySelector('.form')
 const id = document.getElementById('id')
@@ -22,19 +22,6 @@ const email = document.getElementById('email')
 const password = document.getElementById('password')
 const roles = document.getElementById('roles')
 let option = ''
-
-// Edit button event 
-btnEdit.addEventListener('click', ()=>{
-    id.value = ''
-    userName.value = ''
-    name.value = ''
-    surname.value = ''
-    email.value = ''
-    password.value = ''
-    roles.value = ''
-    modalEdit.show()
-    option = 'edit'
-})
 
 
 //function dataShow
@@ -66,36 +53,6 @@ fetch(url)
     .then(response => response.json())
     .then(data => dataShow(data))
     .catch(error => console.log(error))
-
-
-//Edit button
-container.addEventListener('click', (event) => {
-    if (event.target.classList.contains('btnEdit')) {
-        const row = event.target.closest('tr')
-        const id = row.querySelector('td:first-child').textContent
-        
-        alertify.confirm("This is a confirm dialog.",
-        function(){
-        alertify.success('Изменения сохранены')
-        },
-        function(){
-        alertify.error('Cancel')
-        })
-    }
-});
-
-// Edit form
-let idForm = 0
-on(document, 'click', 'btnEdit', e =>{
-    const row = e.target.parentNode.parentNode
-    idForm = row.children[0].innerHTML
-    const nameForm = row.children[1].innerHTML
-    const surnameForm = row.children[3].innerHTML
-    const usernameForm = row.children[4].innerHTML
-    const emailForm = row.children[5].innerHTML
-    const rolesForm = row.children[6].innerHTML
-})
-
 
 
 //Delete button
