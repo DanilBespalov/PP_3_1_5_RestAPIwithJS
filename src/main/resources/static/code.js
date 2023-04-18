@@ -4,16 +4,11 @@ console.log("TEST")
 console.log("TEST")
 
 
-// url API
 const url = 'http://localhost:8080/api/admin'
 const container = document.querySelector('tbody')
 let resultData = ''
 
-// const modalNew = new bootstrap.Modal(document.getElementById('modalNew'))
-
-// const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'))
-
-const formCreate = document.querySelector('.form')
+const formCreate = document.querySelector('.createForm')
 const id = document.getElementById('id')
 const userName = document.getElementById('username')
 const name = document.getElementById('name')
@@ -36,6 +31,7 @@ const dataShow = (elements) => {
         <td>${element.surname }</td>
         <td>${element.username}</td>
         <td>${element.email}</td>
+        <td>${element.password}</td>
         <td>${rolesName}</td>
         <td>
             <a class="btnEdit btn btn-primary">Edit</a>
@@ -54,29 +50,5 @@ fetch(url)
     .then(data => dataShow(data))
     .catch(error => console.log(error))
 
-
-//Delete button
-on(document, 'click', '.btnDelete', e =>{
-    const row = e.target.parentNode.parentNode
-    const id = row.firstElementChild.innerHTML
-
-    alertify.confirm("This is a confirm dialog.",
-        function(){
-        alertify.success('Пользователь удален')
-        },
-        function(){
-        alertify.error('Cancel')
-        });    
-})
-
-// Funсtion for forms and buttons
-function on(element, eventType, selector, handler) {
-    element.addEventListener(eventType, function(event) {
-        const targetElement = event.target.closest(selector);
-        if (targetElement && element.contains(targetElement)) {
-            handler(event);
-        }
-    });
-}
 
   

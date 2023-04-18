@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,15 +49,6 @@ public class AdminController {
         return ResponseEntity.ok(roles);
     }
 
-//    @GetMapping("/new")
-//    public String getUserCreateForm(@ModelAttribute("user") User user,Model model) {
-//
-//        model.addAttribute("roles", roleService.getRoles());
-//        userService.getAllUsers();
-//
-//        return "new";
-//    }
-
     @PostMapping("/new")
     public ResponseEntity<User> createUser(@RequestBody User user) {
 
@@ -68,14 +60,6 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-//    @GetMapping("/edit/{id}")
-//    public String getUserEditForm(@PathVariable("id") Long id, Model model) {
-//        User userById = userService.getUserById(id);
-//        model.addAttribute("user", userById);
-//        model.addAttribute("roles", roleService.getRoles());
-//        return "edit";
-//    }
-
     @GetMapping("/user")
     public ResponseEntity<User> userInfo(@AuthenticationPrincipal User user) {
         if (user == null) {
@@ -84,7 +68,7 @@ public class AdminController {
         return ResponseEntity.ok(user);
     }
 
-    @PatchMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("id") Long id) {
         User updateUser = userService.updateUser(id, user);
 

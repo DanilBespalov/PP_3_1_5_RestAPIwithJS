@@ -76,52 +76,27 @@
                           <th scope="col">Фамилия</th>
                           <th scope="col">UserName</th>
                           <th scope="col">email</th>
+                          <th scope="col">Password</th>
                           <th scope="col">Role</th>
                           <th scope="col">Edit</th>
                           <th scope="col">Delete</th>
                       </tr>
                       </thead>
                       <tbody>
-            
+
                       </tbody>
                   </table>
           </div>
       </div>
   </div>
-  <!-- <button id="editButton">Редактировать</button> -->
 
-        <!-- Модальное окно для создания нового пользователя -->
-
-        <!-- <div id="modalNew" class="modal fade" th:id="${'newModal'}" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="newModalLabel">New user</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body d-flex justify-content-center"> -->
-
-<!-- 
-                    <div id="modalEdit" class="modal fade" th:id="${'editModal'}" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="editModalLabel">New user</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                            </div>
-                            <div class="modal-body d-flex justify-content-center"> -->
-                                
-
-
-<!--         
-        <form>
+    <form id="createForm">
         <div class="mb-2 text-center">
         <label for="username" class="col-sm-6 col-form-label">User name</label>
         <div class="col-6 mx-auto d-flex">
         <input type="text" class="form-control" id="username" placeholder="имя пользователя">
         </div>
         </div>
-        
         
         <div class="mb-2 text-center">
         <label for="name" class="col-sm-6 col-form-label">First name</label>
@@ -162,13 +137,119 @@
         </select>
         </div>
         </div>
-        <button type="submit" class="btn btn-success mx-auto d-flex">Add new user</button>
-        
+        <!-- <button type="submit" class="btnNew btn-success mx-auto d-flex">Add new user</button>
+        <button id="editFormCloseButton">Закрыть</button> -->
+
+    </form>
+
+
+        <form id="editForm">
+            <div class="mb-2 text-center">
+            <label for="username" class="col-sm-6 col-form-label">User name</label>
+            <div class="col-6 mx-auto d-flex">
+            <input type="text" class="form-control" id="username" placeholder="имя пользователя">
+            </div>
+            </div>
+            
+            <div class="mb-2 text-center">
+            <label for="name" class="col-sm-6 col-form-label">First name</label>
+            <div class="col-sm-6 mx-auto d-flex">
+            <input type="text" class="form-control" id="name" placeholder="имя">
+            </div>
+            </div>
+            
+            <div class="mb-2 text-center">
+            <label for="surname" class="col-sm-6 col-form-label">Last name</label>
+            <div class="col-sm-6 mx-auto d-flex">
+            <input type="text" class="form-control" id="surname" placeholder="фамилия">
+            </div>
+            </div>
+            
+            <div class="mb-2 text-center">
+            <label for="email" class="col-sm-6 col-form-label">email</label>
+            <div class="col-sm-6 mx-auto d-flex">
+            <input type="email" class="form-control" id="email" placeholder="email">
+            </div>
+            </div>
+            
+            <div class="mb-2 text-center">
+            <label for="password" class="col-sm-6 col-form-label">Password</label>
+            <div class="col-sm-6 mx-auto d-flex">
+            <input type="password" class="form-control" id="password" placeholder="введите пароль">
+            </div>
+            </div>
+            
+            <div class="form-group text-center" multiple aria-label="multiple select">
+            <label for="roles">Role</label>
+            <div class="col-sm-6 mx-auto d-flex mb-2">
+            <select class="form-select" id="roles" name="roles" multiple>
+            <option th:each="role : ${roles}"
+                  th:text="${role.getRole()}"
+                  th:value="${role.getId()}"
+                  th:field="*{roles}"></option>
+            </select>
+            </div>
+            </div>
+            <!-- <button type="submit" class="btnEdit btn-success mx-auto d-flex">Edit user</button>
+            <button id="editFormCloseButton">Закрыть</button> -->
+            <a class="btnEdit btn btn-primary" id="editBtn">Edit</a>
+
+            
         </form>
-              </div> 
-            </div> 
-          </div>
-          </div> -->
+            
+
+            <form id="deleteForm">
+                <div class="mb-2 text-center">
+                <label for="username" class="col-sm-6 col-form-label">User name</label>
+                <div class="col-6 mx-auto d-flex">
+                <input type="text" class="form-control" id="username" placeholder="имя пользователя">
+                </div>
+                </div>
+                
+                <div class="mb-2 text-center">
+                <label for="name" class="col-sm-6 col-form-label">First name</label>
+                <div class="col-sm-6 mx-auto d-flex">
+                <input type="text" class="form-control" id="name" placeholder="имя">
+                </div>
+                </div>
+                
+                <div class="mb-2 text-center">
+                <label for="surname" class="col-sm-6 col-form-label">Last name</label>
+                <div class="col-sm-6 mx-auto d-flex">
+                <input type="text" class="form-control" id="surname" placeholder="фамилия">
+                </div>
+                </div>
+                
+                <div class="mb-2 text-center">
+                <label for="email" class="col-sm-6 col-form-label">email</label>
+                <div class="col-sm-6 mx-auto d-flex">
+                <input type="email" class="form-control" id="email" placeholder="email">
+                </div>
+                </div>
+                
+                <div class="mb-2 text-center">
+                <label for="password" class="col-sm-6 col-form-label">Password</label>
+                <div class="col-sm-6 mx-auto d-flex">
+                <input type="password" class="form-control" id="password" placeholder="введите пароль">
+                </div>
+                </div>
+                
+                <div class="form-group text-center" multiple aria-label="multiple select">
+                <label for="roles">Role</label>
+                <div class="col-sm-6 mx-auto d-flex mb-2">
+                <select class="form-select" id="roles" name="roles" multiple>
+                <option th:each="role : ${roles}"
+                      th:text="${role.getRole()}"
+                      th:value="${role.getId()}"
+                      th:field="*{roles}"></option>
+                </select>
+                </div>
+                </div>
+                <!-- <button type="submit" class="btnDelete btn-success mx-auto d-flex">Delete user</button>
+                <button id="deleteFormCloseButton">Закрыть</button> -->
+                <a class="btnDelete btn btn-danger" id="deleteBtn">Delete</a>
+                
+            </form>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

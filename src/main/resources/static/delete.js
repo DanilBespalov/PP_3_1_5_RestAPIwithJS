@@ -14,11 +14,12 @@ async function deleteUserData(id) {
     let dbRoles = await showAllRole()
 
     $.get(href, function (user) {
-        $('.form #dId').val(user.id)
-        $('.form #dFirstName').val(user.firstName)
-        $('.form #dLastName').val(user.lastName)
-        $('.form #dAge').val(user.age)
-        $('.form #dEmail').val(user.email)
+        $('.deleteForm #id').val(user.id);
+        $('.deleteForm #name').val(user.name);
+        $('.deleteForm #surname').val(user.surname);
+        $('.deleteForm #username').val(user.username);
+        $('.deleteForm #email').val(user.email);
+        $('.deleteForm #password').val("");
 
         // const inputRoles = document.getElementById('dRoles')
         // inputRoles.innerHTML = `
@@ -28,15 +29,24 @@ async function deleteUserData(id) {
     })
 
 
-    document.getElementById('delete-user-button').addEventListener('click', async () => {
-        await fetch(`http://localhost:8080/api/v1/users/${id}`, {
+    document.getElementById('btnDelete').addEventListener('click', async () => {
+        await fetch(`http://localhost:8080/api/admin/delete/${id}`, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
             }
-        });
-
-        $('#deleteFormCloseButton').click()
+        });        
+        alertify.confirm("This is a confirm dialog.",
+        function(){
+        alertify.success('Пользователь удален')
+        },
+        function(){
+        alertify.error('Cancel')
+        });    
+        
+        $('#btnDelete').click()
         await list()
     })
 }
+
+

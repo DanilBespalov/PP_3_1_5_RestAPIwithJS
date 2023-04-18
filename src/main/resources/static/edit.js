@@ -3,14 +3,20 @@ console.log("TEST")
 console.log("TEST")
 console.log("TEST")
 
-async function showAllRole() {
-    let dbRoles = [];
-    let roles = await fetch("http://localhost:8080/api/admin/edit/${id}")
-    await roles.json().then(roles => {
-        roles.forEach(role =>
-            dbRoles.push(role))
-    });
-    return dbRoles;
+async function roleArray(options) {
+    let dbRoles = await showAllRole();
+    let array = []
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].selected) {
+            let role = {
+                id: options[i].value,
+                name: dbRoles[i].name
+            }
+
+            array.push(role)
+        }
+    }
+    return array
 }
 async function editUserData(id) {
     
@@ -18,18 +24,18 @@ async function editUserData(id) {
     let href = `http://localhost:8080/api/admin/edit/${id}`
     let dbRoles = await showAllRole();
     $.get(href, function (user) {
-        $('.form #id').val(user.id);
-        $('.form #username').val(user.firstName);
-        $('.form #name').val(user.lastName);
-        $('.form #surname').val(user.age);
-        $('.form #email').val(user.email);
-        $('.form #password').val("");
-        // const inputRoles = document.getElementById('roles');
+        $('.editForm #id').val(user.id);
+        $('.editForm #name').val(user.name);
+        $('.editForm #surname').val(user.surname);
+        $('.editForm #username').val(user.username);
+        $('.editForm #email').val(user.email);
+        $('.editForm #password').val("");
+        const inputRoles = document.getElementById('roles');
 
-        // inputRoles.innerHTML = `
-        //     <option value="${dbRoles[0].id}">${dbRoles[0]}</option>
-        //     <option value="${dbRoles[1].id}">${dbRoles[1]}</option>
-        //     `
+        inputRoles.innerHTML = `
+            <option value="${dbRoles[0].id}">${dbRoles[0]}</option>
+            <option value="${dbRoles[1].id}">${dbRoles[1]}</option>
+            `
     })
 
      // Добавление обработчика события на кнопку
@@ -62,7 +68,7 @@ async function editUserData(id) {
             function(){
             alertify.error('Cancel')
             })
-            $('#editFormCloseButton').click()
+            // $('#editFormCloseButton').click()
             await list()
 
         }
