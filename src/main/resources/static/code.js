@@ -31,7 +31,6 @@ const dataShow = (elements) => {
         <td>${element.surname }</td>
         <td>${element.username}</td>
         <td>${element.email}</td>
-        <td>${element.password}</td>
         <td>${rolesName}</td>
         <td>
             <a class="btnEdit btn btn-primary">Edit</a>
