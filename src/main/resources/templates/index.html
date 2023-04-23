@@ -62,10 +62,10 @@
   
               <ul class="nav nav-tabs">
                   <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" th:href="@{/api/admin}">Users table</a>
+                      <a class="nav-link active" id="nav-tab-home" aria-current="page" th:href="@{/api/admin}">Users table</a>
                   </li>
                   <li class="nav-item">
-                       <a class="nav-link" th:href="@{/api/admin/new}">New User</a>
+                       <a class="nav-link" id="addNewUser" href="form-create" data-toggle="modal" data-target="#addUserModal">New User</a>
                   </li>
               </ul>
                   <table id="userTableBody" class="table table-striped">
@@ -89,6 +89,19 @@
       </div>
   </div>
 
+<!-- Модальное окно -->
+<div class="modal" tabindex="-1" role="dialog" id="addUserModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add New User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+ <!-- Форма добавления нового пользователя -->
+<div id="form-create" style="display: none;">
     <form id="createForm">
         <div class="mb-2 text-center">
         <label for="username" class="col-sm-6 col-form-label">User name</label>
@@ -138,10 +151,14 @@
         </div>
         <!-- <button type="submit" class="btnNew btn-success mx-auto d-flex">Add new user</button>
         <button id="editFormCloseButton">Закрыть</button> -->
-
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button">close</button>
+        </div>
     </form>
-
-
+</div>
+  
+    <div id="form-edit" style="display: none;">
         <form id="editForm">
             <div class="mb-2 text-center">
             <label for="username" class="col-sm-6 col-form-label">User name</label>
@@ -195,8 +212,9 @@
 
             
         </form>
-            
+    </div>       
 
+        <div id="form-delete" style="display: none;">
             <form id="deleteForm">
                 <div class="mb-2 text-center">
                 <label for="username" class="col-sm-6 col-form-label">User name</label>
@@ -249,14 +267,15 @@
                 <a class="btnDelete btn btn-danger" id="deleteBtn">Delete</a>
                 
             </form>
-
+        </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="/code.js"></script>
+<script src="/newUser.js"></script>
 <!-- <script src="/edit.js"></script>
-<script src="/delete.js"></script> -->
-<!-- <script src="/user.js"></script> -->
+<script src="/delete.js"></script>
+<script src="/user.js"></script> -->
 
 
 <!-- JavaScript -->
