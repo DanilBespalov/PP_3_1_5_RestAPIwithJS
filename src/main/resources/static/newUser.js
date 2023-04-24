@@ -3,122 +3,74 @@
 //     const inputRoles = document.getElementById('roles');
 //     let dbRoles = await showAllRole();
 //     inputRoles.innerHTML = `
-//             <option value="${dbRoles[0].id}">${dbRoles[0].shortName}</option>
-//             <option value="${dbRoles[1].id}">${dbRoles[1].shortName}</option>
+//             <option value="${dbRoles[0].id}">${dbRoles[0].name}</option>
+//             <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
 //             `
 // }
 
-
 // document.getElementById('profile-tab').addEventListener('click', showRole)
-function showCreateUserForm() {
-    const createUserForm = document.getElementById('form-create');
-    createUserForm.style.display = 'block';
-}
 
-// document.getElementById('addNewUser').addEventListener('click', showCreateUserForm);
+const rolesSelect = document.getElementById('rolesNew');
 
-console.log("CREATE")
+// Запрашиваем список ролей с сервера и преобразуем его в элементы option
+fetch('http://localhost:8080/api/admin/roles')
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(role => {
+      const option = document.createElement('option');
+      option.value = role.id;
+      option.text = role.name;
+      rolesSelect.appendChild(option);
+    });
+  });
 
-document.getElementById('addNewUser').addEventListener('click', createUser)
 
-console.log("CREATE2")
+// Находим ссылку, форму и модальное окно с кнопкой createButton
+const createLink = document.querySelector('#addNewUser');
+const createForm = document.querySelector('#form-create');
+const myModal = new bootstrap.Modal(document.getElementById('addUserModal'))
+const createButton = document.querySelector('#createUserButton');
 
 
+// Добавляем обработчик событий на нажатие ссылки
+createLink.addEventListener('click', (event) => {
+    event.preventDefault();                   // Отменяем стандартное поведение ссылки
+    console.log("  нажал на кнопку")
+    createForm.style.display = 'block';       // Отображаем форму
+});
+
+
+// Добавляем обработчик событий на клик по кнопке создания пользователя
+createButton.addEventListener('click', createUser)
 async function createUser() {
 
-    const inputUserName = document.getElementById('username').value
-    const inputName = document.getElementById('name').value
-    const inputSurname = document.getElementById('surname').value
-    const inputEmail = document.getElementById('email').value
-    const inputPassword = document.getElementById('password').value
-    // const inputRoles = document.getElementById('roles').value
+    const inputUserName = document.getElementById('usernameNew').value
+    const inputName = document.getElementById('nameNew').value
+    const inputSurname = document.getElementById('surnameNew').value
+    const inputEmail = document.getElementById('emailNew').value
+    const inputPassword = document.getElementById('passwordNew').value
+    const inputRoles = document.getElementById('rolesNew').value
 
     // let listRoles = await roleArray(document.getElementById('roles'));
+    
 
-    console.log("CREATE3")
     if (inputUserName && inputName && inputSurname && inputEmail && inputPassword) {
+        console.log("  провереныы поля")
 
         let res = await fetch(`http://localhost:8080/api/admin/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({inputUserName, inputName, inputSurname, inputEmail, inputPassword})
+            body: JSON.stringify({inputUserName, inputName, inputSurname, inputEmail, inputPassword, inputRoles})
         });
-        const result = await res.json();
-        await list()
-        $('#nav-tab-home').click();
+        console.log("  пользователь получен")
+        const result = await res.json();             // Получаем ответ от сервера в формате JSON
+        console.log("  создан пользователь")
+        await list()                                 // Обновляем список пользователей
+        $('#nav-tab-home').click();                  // Переключаемся на вкладку Home
     }
 
     // document.getElementById('form-create').reset();
 
 }
-  
-
-
-
-
-
-
-
-
-// // Получаем ссылку на кнопку
-// const addNewUserBtn = document.getElementById('addNewUser');
-
-// // Добавляем обработчик событий на клик по кнопке
-// addNewUserBtn.addEventListener('click', showCreateUserForm);
-
-// // Функция для отображения формы создания пользователя
-// function showCreateUserForm() {
-//   // Получаем форму по id
-//   const createUserForm = document.getElementById('form-create');
-//   // Показываем форму, установив стиль display в block
-//   createUserForm.style.display = 'block';
-// }
-
-// // Добавляем обработчик событий на клик по кнопке создания пользователя
-// document.getElementById('createUserBtn').addEventListener('click', createUser);
-
-// // Функция для создания нового пользователя
-// async function createUser() {
-//   // Получаем значения полей ввода
-//   const inputUserName = document.getElementById('username').value;
-//   const inputName = document.getElementById('name').value;
-//   const inputSurname = document.getElementById('surname').value;
-//   const inputEmail = document.getElementById('email').value;
-//   const inputPassword = document.getElementById('password').value;
-
-//   // Проверяем заполнены ли обязательные поля
-//   if (inputUserName && inputName && inputSurname && inputEmail && inputPassword) {
-//     // Отправляем POST запрос на сервер
-//     const res = await fetch('http://localhost:8080/api/admin/new', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({ inputUserName, inputName, inputSurname, inputEmail, inputPassword })
-//     });
-//     // Получаем ответ от сервера в формате JSON
-//     const result = await res.json();
-//     // Обновляем список пользователей
-//     await list();
-//     // Переключаемся на вкладку Home
-//     $('#nav-tab-home').click();
-//   }
-// }
-
-// // Функция для получения списка ролей
-// async function roleArray(select) {
-//   let roles = [];
-//   const options = select && select.options;
-//   let opt;
-
-//   for (let i = 0, len = options.length; i < len; i++) {
-//     opt = options[i];
-
-//     if (opt.selected) {
-//       roles.push(opt.value);
-//     }
-//   }
-//   return roles;
-// }

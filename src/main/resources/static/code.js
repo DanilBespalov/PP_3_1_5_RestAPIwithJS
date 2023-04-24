@@ -24,11 +24,11 @@ const dataShow = (elements) => {
     elements.forEach(element => {
 
         const rolesName = element.roles.map(role => role.role.replace('ROLE_', ' ')).join(', ')
-        resultData +=`
+        resultData += `
     <tr>
         <td>${element.id}</td>
         <td>${element.name}</td>
-        <td>${element.surname }</td>
+        <td>${element.surname}</td>
         <td>${element.username}</td>
         <td>${element.email}</td>
         <td>${rolesName}</td>
