@@ -49,7 +49,7 @@ async function createUser() {
     const inputSurname = document.getElementById('surnameNew').value
     const inputEmail = document.getElementById('emailNew').value
     const inputPassword = document.getElementById('passwordNew').value
-    const inputRoles = document.getElementById('rolesNew').value
+    // const inputRoles = document.getElementById('rolesNew').value             
 
     // let listRoles = await roleArray(document.getElementById('roles'));
     
@@ -62,9 +62,11 @@ async function createUser() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({inputUserName, inputName, inputSurname, inputEmail, inputPassword, inputRoles})
+            body: JSON.stringify({inputUserName, inputName, inputSurname, inputEmail, inputPassword})
         });
-        console.log("  пользователь получен")
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
         const result = await res.json();             // Получаем ответ от сервера в формате JSON
         console.log("  создан пользователь")
         await list()                                 // Обновляем список пользователей
