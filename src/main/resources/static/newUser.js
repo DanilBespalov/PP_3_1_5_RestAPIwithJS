@@ -1,17 +1,16 @@
-// async function showRole() {
+async function showRole() {
 
-//     const inputRoles = document.getElementById('roles');
-//     let dbRoles = await showAllRole();
-//     inputRoles.innerHTML = `
-//             <option value="${dbRoles[0].id}">${dbRoles[0].name}</option>
-//             <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
-//             `
-// }
+    const inputRoles = document.getElementById('rolesNew');
+    let dbRoles = await showAllRole();
+    inputRoles.innerHTML = `
+            <option value="${dbRoles[0].id}">${dbRoles[0].name}</option>
+            <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
+            `
+}
 
-// document.getElementById('profile-tab').addEventListener('click', showRole)
+document.getElementById('profile-tab').addEventListener('click', showRole)
 
 const rolesSelect = document.getElementById('rolesNew');
-
 // Запрашиваем список ролей с сервера и преобразуем его в элементы option
 fetch('http://localhost:8080/api/admin/roles')
   .then(response => response.json())
@@ -49,26 +48,33 @@ async function createUser() {
     const inputSurname = document.getElementById('surnameNew').value
     const inputEmail = document.getElementById('emailNew').value
     const inputPassword = document.getElementById('passwordNew').value
-    // const inputRoles = document.getElementById('rolesNew').value             
 
-    // let listRoles = await roleArray(document.getElementById('roles'));
+    let listRoles = await roleArray(document.getElementById('rolesNew'));
+
     
+    console.log(inputUserName, inputName, inputSurname, inputEmail, inputPassword, listRoles);
+    if (inputUserName && inputName && inputSurname && inputEmail && inputPassword && listRoles) {
 
-    if (inputUserName && inputName && inputSurname && inputEmail && inputPassword) {
-        console.log("  провереныы поля")
+        let user = {
+            username: inputUserName,
+            name: inputName, 
+            surname: inputSurname, 
+            email: inputEmail,
+            password: inputPassword,
+            roles: listRoles
+          };
 
         let res = await fetch(`http://localhost:8080/api/admin/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({inputUserName, inputName, inputSurname, inputEmail, inputPassword})
+            body: JSON.stringify({user})
         });
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
+       
+        console.log("  пользователь получен")
         const result = await res.json();             // Получаем ответ от сервера в формате JSON
-        console.log("  создан пользователь")
+        console.log("создан пользователь: ", result);
         await list()                                 // Обновляем список пользователей
         $('#nav-tab-home').click();                  // Переключаемся на вкладку Home
     }
