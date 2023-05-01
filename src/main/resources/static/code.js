@@ -8,7 +8,6 @@ const url = 'http://localhost:8080/api/admin'
 const container = document.querySelector('tbody')
 let resultData = ''
 
-const formCreate = document.querySelector('.createForm')
 const id = document.getElementById('id')
 const userName = document.getElementById('username')
 const name = document.getElementById('name')
