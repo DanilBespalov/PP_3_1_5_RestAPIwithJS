@@ -1,25 +1,25 @@
 // Функция для получения ролей из API
-// async function showAllRole() {
-//     let dbRoles = [];
-//     let roles = await fetch("http://localhost:8080/api/admin/roles"); 
-//     await roles.json().then(roles => {
-//         roles.forEach(role =>
-//             dbRoles.push(role))
-//     });
-//     return dbRoles;
-// }
-// showAllRole().then(console.log)
+async function showAllRole() {
+    let dbRoles = [];
+    let roles = await fetch("http://localhost:8080/api/admin/roles"); 
+    await roles.json().then(roles => {
+        roles.forEach(role =>
+            dbRoles.push(role))
+    });
+    return dbRoles;
+}
+showAllRole().then(console.log)
 
 
-// async function showRole() {
+async function showRole() {
 
-//     const inputRoles = document.getElementById('rolesNew');
-//     let dbRoles = await showAllRole();
-//     inputRoles.innerHTML = `
-//             <option value="${dbRoles[0].id}">${dbRoles[0].name}</option>
-//             <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
-//             `
-// }
+    const inputRoles = document.getElementById('rolesNew');
+    let dbRoles = await showAllRole();
+    inputRoles.innerHTML = `
+            <option value="${dbRoles[0].id}">${dbRoles[0].name}</option>
+            <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
+            `
+}
 
 
 document.getElementById('profile-tab').addEventListener('click', showRole)
@@ -42,9 +42,9 @@ createLink.addEventListener('click', (event) => {
 createForm.addEventListener('submit', event => {
     event.preventDefault();
 // Получаем выбранные роли из выпадающего списка
-// const selectedRoles = Array.from(
-//     document.querySelectorAll("#rolesNew option:checked")
-//   ).map((option) => option.value);
+const selectedRoles = Array.from(
+    document.querySelectorAll("#rolesNew option:checked")
+  ).map((option) => option.value);
   });
   
 // Добавляем обработчик событий на клик по кнопке создания пользователя
@@ -57,7 +57,7 @@ async function createUser() {
     const inputEmail = document.getElementById('emailNew').value
     const inputPassword = document.getElementById('passwordNew').value
 
-    // let listRoles = await showAllRole(document.getElementById('rolesNew'));
+    let listRoles = await showAllRole(document.getElementById('rolesNew'));
     
 
     console.log("inputUserName: ", inputUserName);
@@ -65,7 +65,7 @@ async function createUser() {
     console.log("inputSurname: ", inputSurname);
     console.log("inputEmail: ", inputEmail);
     console.log("inputPassword: ", inputPassword);
-    // console.log("listRoles: ", listRoles);
+    console.log("listRoles: ", listRoles);
     
     console.log(inputUserName, inputName, inputSurname, inputEmail, inputPassword);
     if (inputUserName && inputName && inputSurname && inputEmail && inputPassword) {
@@ -76,7 +76,7 @@ async function createUser() {
             surname: inputSurname, 
             email: inputEmail,
             password: inputPassword,
-            // roles: listRoles
+            roles: listRoles
           };
           
         let res = await fetch(`http://localhost:8080/api/admin/new`, {
@@ -92,7 +92,7 @@ async function createUser() {
         console.log("inputSurname: ", inputSurname);
         console.log("inputEmail: ", inputEmail);
         console.log("inputPassword: ", inputPassword);
-        // console.log("listRoles: ", listRoles);
+        console.log("listRoles: ", listRoles);
         console.log("  пользователь получен")
 
         const result = await res.json();             // Получаем ответ от сервера в формате JSON
