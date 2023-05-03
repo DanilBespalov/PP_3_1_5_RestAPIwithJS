@@ -59,7 +59,7 @@ async function createUser() {
 
     let listRoles = await showAllRole(document.getElementById('rolesNew'));
     
-
+    //
     console.log("inputUserName: ", inputUserName);
     console.log("inputName: ", inputName);
     console.log("inputSurname: ", inputSurname);
