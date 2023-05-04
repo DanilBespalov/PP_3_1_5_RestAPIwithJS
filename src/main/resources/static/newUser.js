@@ -1,16 +1,3 @@
-// Функция для получения ролей из API
-async function showAllRole() {
-    let dbRoles = [];
-    let roles = await fetch("http://localhost:8080/api/admin/roles"); 
-    await roles.json().then(roles => {
-        roles.forEach(role =>
-            dbRoles.push(role))
-    });
-    return dbRoles;
-}
-showAllRole().then(console.log)
-
-
 async function showRole() {
 
     const inputRoles = document.getElementById('rolesNew');
@@ -41,10 +28,6 @@ createLink.addEventListener('click', (event) => {
 // отменяем поведение формы
 createForm.addEventListener('submit', event => {
     event.preventDefault();
-// Получаем выбранные роли из выпадающего списка
-const selectedRoles = Array.from(
-    document.querySelectorAll("#rolesNew option:checked")
-  ).map((option) => option.value);
   });
   
 // Добавляем обработчик событий на клик по кнопке создания пользователя
@@ -56,19 +39,9 @@ async function createUser() {
     const inputSurname = document.getElementById('surnameNew').value
     const inputEmail = document.getElementById('emailNew').value
     const inputPassword = document.getElementById('passwordNew').value
+    let listRoles = await roleArray(document.getElementById('rolesNew'));
 
-    let listRoles = await showAllRole(document.getElementById('rolesNew'));
-    
-    //
-    console.log("inputUserName: ", inputUserName);
-    console.log("inputName: ", inputName);
-    console.log("inputSurname: ", inputSurname);
-    console.log("inputEmail: ", inputEmail);
-    console.log("inputPassword: ", inputPassword);
-    console.log("listRoles: ", listRoles);
-    
-    console.log(inputUserName, inputName, inputSurname, inputEmail, inputPassword);
-    if (inputUserName && inputName && inputSurname && inputEmail && inputPassword) {
+    if (inputUserName && inputName && inputSurname && inputEmail && inputPassword && (listRoles.length !== 0)) {
 
         let user = {
             username: inputUserName,
@@ -84,23 +57,20 @@ async function createUser() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({user})
+            body: JSON.stringify(user)
         });
 
-        console.log("inputUserName: ", inputUserName);
-        console.log("inputName: ", inputName);
-        console.log("inputSurname: ", inputSurname);
-        console.log("inputEmail: ", inputEmail);
-        console.log("inputPassword: ", inputPassword);
-        console.log("listRoles: ", listRoles);
-        console.log("  пользователь получен")
-
-        const result = await res.json();             // Получаем ответ от сервера в формате JSON
+        const result = await res.json();           
+        await list()
         console.log("создан пользователь: ", result);
-        $('#nav-tab-home').click();                  // Переключаемся на вкладку Home
+        $('#nav-tab-home').click();                  
     }
 
-    // document.getElementById('form-create').reset();
+        inputUserName.value = ''
+        inputName.value = ''
+        inputSurname.value = ''
+        inputEmail.value = ''
+        inputPassword.value = ''
 
 }
 

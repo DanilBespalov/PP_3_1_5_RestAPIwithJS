@@ -1,8 +1,3 @@
-console.log("TEST")
-console.log("TEST")
-console.log("TEST")
-console.log("TEST")
-
 async function roleArray(options) {
     let dbRoles = await showAllRole();
     let array = []
@@ -30,25 +25,25 @@ async function editUserData(id) {
         $('.editForm #username').val(user.username);
         $('.editForm #email').val(user.email);
         $('.editForm #password').val("");
-        const inputRoles = document.getElementById('roles');
+        const inputRoles = document.getElementById('rolesEdit');
 
         inputRoles.innerHTML = `
-            <option value="${dbRoles[0].id}">${dbRoles[0]}</option>
-            <option value="${dbRoles[1].id}">${dbRoles[1]}</option>
+            <option value="${dbRoles[0].id}">${dbRoles[0].name}</option>
+            <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
             `
     })
+
 
      // Добавление обработчика события на кнопку
     document.querySelector('.btnEdit').addEventListener('click', async () => {
         const editId = document.getElementById('id').value
-        const editUserName = document.getElementById('username').value
-        const editName = document.getElementById('name').value
-        const editSurname = document.getElementById('surname').value
-        const editEmail = document.getElementById('email').value
-        const editPassword = document.getElementById('password').value
-        const editRoles = document.getElementById('roles').value
+        const editUserName = document.getElementById('usernameEdit').value
+        const editName = document.getElementById('nameEdit').value
+        const editSurname = document.getElementById('surnameEdit').value
+        const editEmail = document.getElementById('emailEdit').value
+        const editPassword = document.getElementById('passwordEdit').value
 
-        // const listRoleEditUser = await roleArray(document.getElementById('roles'))
+        const listRoleEditUser = await roleArray(document.getElementById('rolesEdit'))
 
 
         if (editId && editUserName && editName && editSurname && editEmail) {
@@ -57,7 +52,7 @@ async function editUserData(id) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({editId, editUserName, editName, editSurname, editEmail, editPassword, editRoles})
+                body: JSON.stringify({editId, editUserName, editName, editSurname, editEmail, editPassword, roles: listRoleEditUser})
             });
             const result = await response.json();
 

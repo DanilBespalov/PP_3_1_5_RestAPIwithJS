@@ -1,6 +1,6 @@
 async function showAllRole() {
     let dbRoles = [];
-    let roles = await fetch("http://localhost:8080/api/admin/delete/${id}")
+    let roles = await fetch("http://localhost:8080/api/admin/roles")
     await roles.json().then(roles => {
         roles.forEach(role =>
             dbRoles.push(role))
