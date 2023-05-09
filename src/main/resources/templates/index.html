@@ -104,7 +104,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addUserModalLabel">Создание пользователя</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="btnCloseForm" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Форма добавления нового пользователя -->
@@ -165,6 +165,15 @@
     </div>
 </div>
 
+<!-- Модальное окно с формой редактирования пользователя -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Редактирование пользователя</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
 <div id="form-edit" style="display: none;">
     <form id="editForm">
         <div class="mb-2 text-center">
@@ -210,13 +219,22 @@
                 </select>
             </div>
         </div>
-        <!-- <button type="submit" class="btnEdit btn-success mx-auto d-flex">Edit user</button>
-        <button id="editFormCloseButton">Закрыть</button> -->
-        <a class="btnEdit btn btn-primary" id="editBtn">Edit</a>
-
+        <button type="submit" id="editUserButton" class="btn btn-success mx-auto d-flex">Edit</button>
 
     </form>
 </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно с формой удаления пользователя -->
+<div class="modal fade" id="delUserModal" tabindex="-1" aria-labelledby="delUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delUserModalLabel">Удаление пользователя</h5>
+                <button type="button" id="btnCloseDelForm"class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
 <div id="form-delete" style="display: none;">
     <form id="deleteForm">
@@ -263,11 +281,13 @@
                 </select>
             </div>
         </div>
-        <!-- <button type="submit" class="btnDelete btn-success mx-auto d-flex">Delete user</button>
-        <button id="deleteFormCloseButton">Закрыть</button> -->
-        <a class="btnDelete btn btn-danger" id="deleteBtn">Delete</a>
-
+        <!-- <button type="submit" id="deleteBtnForm" class="btnDelete btn-success mx-auto d-flex">Delete user</button> -->
+        <button type="submit" id="deleteUserButton" class="btnDelete btn-success mx-auto d-flex"
+        href="#" data-bs-toggle="modal" data-bs-target="#delUserModal">Delete</button>
     </form>
+</div>
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -276,8 +296,8 @@
         crossorigin="anonymous"></script>
 <script src="/code.js"></script>
 <script src="/newUser.js"></script>
-<script src="/edit.js"></script>
-<script src="/delete.js"></script>
+<!-- <script src="/edit.js"></script> -->
+<!-- <script src="/delete.js"></script> -->
 <!-- <script src="/user.js"></script> -->
 
 

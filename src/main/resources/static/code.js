@@ -32,10 +32,11 @@ const dataShow = (elements) => {
         <td>${element.email}</td>
         <td>${rolesName}</td>
         <td>
-            <a class="btnEdit btn btn-primary">Edit</a>
+            <a id="btnEdit" class="btnEdit btn btn-primary" href="#" data-id="${element.id}">Edit</a>
             </td>
         <td>
             <a class="btnDelete btn btn-danger">Delete</a>
+            
             </td>
     </tr>`
     });

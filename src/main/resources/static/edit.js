@@ -13,6 +13,8 @@ async function roleArray(options) {
     }
     return array
 }
+const myModalEdit = new bootstrap.Modal(document.getElementById('editUserModal'))
+
 async function editUserData(id) {
     
     // Заполнение формы данными пользователя
@@ -56,14 +58,14 @@ async function editUserData(id) {
             });
             const result = await response.json();
 
-            alertify.confirm("This is a confirm dialog.",
-            function(){
-            alertify.success('Изменения сохранены')
-            },
-            function(){
-            alertify.error('Cancel')
-            })
-            // $('#editFormCloseButton').click()
+            // alertify.confirm("This is a confirm dialog.",
+            // function(){
+            // alertify.success('Изменения сохранены')
+            // },
+            // function(){
+            // alertify.error('Cancel')
+            // })
+            $('#editFormCloseButton').click()
             await list()
 
         }

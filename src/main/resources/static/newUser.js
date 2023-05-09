@@ -1,3 +1,13 @@
+async function showAllRole() {
+    let dbRoles = [];
+    let roles = await fetch("http://localhost:8080/api/admin/roles")
+    await roles.json().then(roles => {
+        roles.forEach(role =>
+            dbRoles.push(role))
+    });
+    return dbRoles;
+}
+
 async function showRole() {
 
     const inputRoles = document.getElementById('rolesNew');
@@ -7,6 +17,23 @@ async function showRole() {
             <option value="${dbRoles[1].id}">${dbRoles[1].name}</option>
             `
 }
+
+// async function roleArray(options) {
+//     let dbRoles = await showAllRole();
+//     let array = []
+//     for (let i = 0; i < options.length; i++) {
+//         if (options[i].selected) {
+//             let role = {
+//                 id: options[i].value,
+//                 name: dbRoles[i].name
+//             }
+
+//             array.push(role)
+//         }
+//     }
+//     return array
+// }
+
 
 
 document.getElementById('profile-tab').addEventListener('click', showRole)
@@ -39,9 +66,9 @@ async function createUser() {
     const inputSurname = document.getElementById('surnameNew').value
     const inputEmail = document.getElementById('emailNew').value
     const inputPassword = document.getElementById('passwordNew').value
-    let listRoles = await roleArray(document.getElementById('rolesNew'));
+    // let listRoles = await roleArray(document.getElementById('rolesNew'));
 
-    if (inputUserName && inputName && inputSurname && inputEmail && inputPassword && (listRoles.length !== 0)) {
+    if (inputUserName && inputName && inputSurname && inputEmail && inputPassword) {
 
         let user = {
             username: inputUserName,
@@ -49,7 +76,7 @@ async function createUser() {
             surname: inputSurname, 
             email: inputEmail,
             password: inputPassword,
-            roles: listRoles
+            // roles: listRoles
           };
           
         let res = await fetch(`http://localhost:8080/api/admin/new`, {
@@ -60,10 +87,11 @@ async function createUser() {
             body: JSON.stringify(user)
         });
 
-        const result = await res.json();           
-        await list()
+        const result = await res.json(); 
+        $('btnCloseForm').click();          
         console.log("создан пользователь: ", result);
-        $('#nav-tab-home').click();                  
+        myModal.hide();
+        $('#nav-tab-home').click();
     }
 
         inputUserName.value = ''
@@ -73,6 +101,8 @@ async function createUser() {
         inputPassword.value = ''
 
 }
+
+
 
 
 
