@@ -11,7 +11,7 @@
 
 
 // Получаем ссылки на элементы страницы
-const delLinks = document.getElementById('btnDel');
+const delLinks = document.querySelector('btnDel');
 const delForm = document.getElementById('form-delete');
 const delModal = new bootstrap.Modal(document.getElementById('delUserModal'));
 const delButton = document.getElementById('deleteUserButton');
