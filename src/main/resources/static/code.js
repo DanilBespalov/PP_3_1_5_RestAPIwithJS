@@ -90,7 +90,7 @@ async function newUser() {
         for (let i = 0; i < createForm.role.options.length; i++) {
             if (createForm.role.options[i].selected) newUserRoles.push({
                 id: createForm.role.options[i].value,
-                roles: createForm.role.options[i].text
+                role: createForm.role.options[i].text
             })
         }
 
