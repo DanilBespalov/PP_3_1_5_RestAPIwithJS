@@ -1,9 +1,13 @@
-console.log("TEST")
-console.log("TEST")
-console.log("TEST")
-console.log("TEST")
+$(async function () {
+    // await getAuthUser();
+    await getAllUsers();
+    await newUser();
+    // removeUser();
+    // updateUser();
 
+});
 
+// Получение списка пользователей 
 const url = 'http://localhost:8080/api/admin'
 const container = document.querySelector('tbody')
 let resultData = ''
@@ -17,8 +21,7 @@ const password = document.getElementById('password')
 const roles = document.getElementById('roles')
 let option = ''
 
-
-//function dataShow
+async function getAllUsers() {
 const dataShow = (elements) => {
     elements.forEach(element => {
 
@@ -43,11 +46,124 @@ const dataShow = (elements) => {
     container.innerHTML = resultData
 }
 
-//Process
 fetch(url)
     .then(response => response.json())
     .then(data => dataShow(data))
     .catch(error => console.log(error))
 
+}
 
-  
+
+// Создание нового пользователя
+async function getRolesOption() {
+    await fetch("http://localhost:8080/api/admin/roles")
+        .then(response => response.json())
+        .then(roles => {
+            roles.forEach(role => {
+                let el = document.createElement("option");
+                el.value = role.id;
+                el.text = role.role.substring(5);
+                $('#rolesNew')[0].appendChild(el);
+            })
+        })
+}
+
+async function newUser() {
+    await getRolesOption();
+    
+    const createForm = document.forms["createForm"];
+    const createLink = document.querySelector('#addNewUser');
+    const createButton = document.querySelector('#createUserButton');
+    
+    // Добавляем обработчик событий на нажатие ссылки
+    createLink.addEventListener('click', (event) => {
+    event.preventDefault();                   
+    console.log("  нажал на кнопку")
+    createForm.style.display = 'block';       
+});
+    createForm.addEventListener('submit', addNewUser)
+    createButton.addEventListener('click', addNewUser);
+
+    async function addNewUser(e) {
+        e.preventDefault();
+        let newUserRoles = [];
+        for (let i = 0; i < createForm.role.options.length; i++) {
+            if (createForm.role.options[i].selected) newUserRoles.push({
+                id: createForm.role.options[i].value,
+                roles: createForm.role.options[i].text
+            })
+        }
+
+        fetch("http://localhost:8080/api/admin/new", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: createForm.usernameNew.value,
+                name: createForm.nameNew.value, 
+                surname: createForm.surnameNew.value, 
+                email: createForm.emailNew.value,
+                password: createForm.passwordNew.value,
+                role: newUserRoles
+            })
+        }).then(() => {
+                console.log("создан пользователь: ");
+                createForm.reset();
+                getAllUsers();
+                $('#nav-tab-home').click();
+            })
+    }
+}
+
+function removeUser(){
+    const deleteForm = document.forms["deleteForm"];
+    const hrefDelete = `http://localhost:8080/api/admin/delete/${id}`;
+
+    deleteForm.addEventListener("submit", ev => {
+        ev.preventDefault();
+        fetch(hrefDelete + deleteForm.id.value, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(() => {
+                getAllUsers();
+                $('#deleteFormCloseButton').click();
+
+            })
+    })
+}
+
+$('#delUserModal').on('show.bs.modal', ev => {
+    let button = $(ev.relatedTarget);
+    let id = button.data('userid');
+    showDeleteModal(id);
+})
+
+async function showDeleteModal(id) {
+    let user = await getUser(id);
+
+     // Получаем данные пользователя
+     $.get(href, function (user) {
+        // Заполняем форму данными пользователя
+        $('.deleteForm #id').val(user.id);
+        $('.deleteForm #name').val(user.name);
+        $('.deleteForm #surname').val(user.surname);
+        $('.deleteForm #username').val(user.username);
+        $('.deleteForm #email').val(user.email);
+    })
+
+    $('#rolesDel').empty();
+
+    user.role.forEach(role => {
+        let el = document.createElement("option");
+        el.text = role.roleName.substring(5);
+        el.value = role.id;
+        $('#rolesDel')[0].appendChild(el);
+    });
+}
+
+
+
+

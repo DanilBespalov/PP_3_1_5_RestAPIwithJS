@@ -90,9 +90,7 @@
                     <th scope="col">Delete</th>
                 </tr>
                 </thead>
-                <tbody>
-
-                </tbody>
+                <tbody id="usersTable"></tbody>
             </table>
         </div>
     </div>
@@ -108,8 +106,8 @@
             </div>
             <div class="modal-body">
                 <!-- Форма добавления нового пользователя -->
-                <div id="form-create" style="display: none;">
-                    <form id="createForm">
+                <div id="form-create">
+                    <form id="createForm" style="display: none;">
                         <div class="mb-2 text-center">
                             <label for="usernameNew" class="col-sm-6 col-form-label">User name</label>
                             <div class="col-6 mx-auto d-flex">
@@ -174,8 +172,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-<div id="form-edit" style="display: none;">
-    <form id="editForm">
+<div id="form-edit">
+    <form id="editForm" style="display: none;">
         <div class="mb-2 text-center">
             <label for="usernameEdit" class="col-sm-6 col-form-label">User name</label>
             <div class="col-6 mx-auto d-flex">
@@ -236,8 +234,8 @@
                 <button type="button" id="btnCloseDelForm"class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-<div id="form-delete" style="display: none;">
-    <form id="deleteForm">
+<div id="form-delete">
+    <form id="deleteForm" style="display: none;">
         <div class="mb-2 text-center">
             <label for="usernameDel" class="col-sm-6 col-form-label">User name</label>
             <div class="col-6 mx-auto d-flex">
@@ -294,10 +292,6 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 <script src="/code.js"></script>
-<script src="/newUser.js"></script>
-<script src="/edit.js"></script>
-<script src="/delete.js"></script>
-<!-- <script src="/user.js"></script> -->
 
 
 <!-- JavaScript -->
