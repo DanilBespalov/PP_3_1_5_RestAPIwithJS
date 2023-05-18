@@ -90,7 +90,7 @@ async function newUser() {
         for (let i = 0; i < createForm.role.options.length; i++) {
             if (createForm.role.options[i].selected) newUserRoles.push({
                 id: createForm.role.options[i].value,
-                role: createForm.role.options[i].text
+                roles: createForm.role.options[i].text
             })
         }
 
@@ -105,7 +105,7 @@ async function newUser() {
                 surname: createForm.surnameNew.value, 
                 email: createForm.emailNew.value,
                 password: createForm.passwordNew.value,
-                role: newUserRoles
+                roles: newUserRoles
             })
         }).then(() => {
                 console.log("создан пользователь: ");
