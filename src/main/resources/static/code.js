@@ -140,11 +140,11 @@ function removeUser(){
 $('#delUserModal').on('show.bs.modal', ev => {
     let button = $(ev.relatedTarget);
     let idDel = button.data('userid');
-    showDeleteModal(idDel);
+    showDeleteModal(id);
 })
 
 
-async function showDeleteModal(idDel) {
+async function showDeleteModal(id) {
     let form = document.forms["formDeleteUser"];
 
     form.idDel.value = user.id;
