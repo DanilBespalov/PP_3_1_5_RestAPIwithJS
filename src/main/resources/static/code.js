@@ -38,7 +38,7 @@ const dataShow = (elements) => {
             <a id="btnEdit" class="btnEdit btn btn-primary" data-action="Edit" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
             </td>
         <td>
-            <a id="btnDel" class="btnDelete btn btn-danger" data-userid="${user.id}" data-action="Delete" data-bs-toggle="modal" data-bs-target="#delUserModal">Delete</a>
+            <a id="btnDel" class="btnDelete btn btn-danger" data-userid="${element.id}" data-action="Delete" data-bs-toggle="modal" data-bs-target="#delUserModal">Delete</a>
             
             </td>
     </tr>`
@@ -53,6 +53,11 @@ fetch(url)
 
 }
 
+async function getUser(id) {
+    let url = "http://localhost:8080/api/admin/" + id;
+    let response = await fetch(url);
+    return await response.json();
+}
 
 // Создание нового пользователя
 async function getRolesOption() {
@@ -119,7 +124,7 @@ async function newUser() {
 function removeUser(){
     
     const deleteForm = document.forms["deleteForm"];
-    const id = $('.deleteForm #id').val();
+    const id = deleteForm.id.value;
     const hrefDel = `http://localhost:8080/api/admin/delete/${id}`;
 
     deleteForm.addEventListener("submit", ev => {
@@ -139,21 +144,21 @@ function removeUser(){
 
 $('#delUserModal').on('show.bs.modal', ev => {
     let button = $(ev.relatedTarget);
-    let idDel = button.data('userid');
-    showDeleteModal(idDel);
+    let id = button.data('userid');
+    showDeleteModal(id);
 })
 //
 
-async function showDeleteModal(idDel) {
-
+async function showDeleteModal(id) {
+    let user = await getUser(id)
     let form = document.forms["formDeleteUser"];
      
-    form.idDel.value = idDel;
-    form.usernameDel.value = user.username;
-    form.nameDel.value = user.name;
-    form.surnameDel.value = user.surname;
-    form.emailDel.value = user.email;
-    form.passwordDel.value = user.password;
+    form.id.value = user.id;
+    form.username.value = user.username;
+    form.name.value = user.name;
+    form.surname.value = user.surname;
+    form.email.value = user.email;
+    form.password.value = user.password;
 
     $('#rolesDel').empty();
 
@@ -164,7 +169,5 @@ async function showDeleteModal(idDel) {
         $('#rolesDel')[0].appendChild(el);
     });
 }
-
-
 
 
