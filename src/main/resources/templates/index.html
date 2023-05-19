@@ -236,48 +236,56 @@
 
 <div id="form-delete">
     <form id="deleteForm" style="display: none;">
+
+        <div class="mb-2 text-center">
+            <label for="usernameDel" class="col-sm-6 col-form-label">ID</label>
+            <div class="col-6 mx-auto d-flex">
+                <input type="text" class="form-control" id="idDel" disabled>
+            </div>
+
         <div class="mb-2 text-center">
             <label for="usernameDel" class="col-sm-6 col-form-label">User name</label>
             <div class="col-6 mx-auto d-flex">
-                <input type="text" class="form-control" id="usernameDel" placeholder="имя пользователя">
+                <input type="text" class="form-control" id="usernameDel" disabled>
             </div>
         </div>
 
         <div class="mb-2 text-center">
             <label for="nameDel" class="col-sm-6 col-form-label">First name</label>
             <div class="col-sm-6 mx-auto d-flex">
-                <input type="text" class="form-control" id="nameDel" placeholder="имя">
+                <input type="text" class="form-control" id="nameDel" disabled> 
             </div>
         </div>
 
         <div class="mb-2 text-center">
             <label for="surnameDel" class="col-sm-6 col-form-label">Last name</label>
             <div class="col-sm-6 mx-auto d-flex">
-                <input type="text" class="form-control" id="surnameDel" placeholder="фамилия">
+                <input type="text" class="form-control" id="surnameDel" disabled> 
             </div>
         </div>
 
         <div class="mb-2 text-center">
             <label for="emailDel" class="col-sm-6 col-form-label">email</label>
             <div class="col-sm-6 mx-auto d-flex">
-                <input type="email" class="form-control" id="emailDel" placeholder="email">
+                <input type="email" class="form-control" id="emailDel" disabled>
             </div>
         </div>
 
         <div class="mb-2 text-center">
             <label for="passwordDel" class="col-sm-6 col-form-label">Password</label>
             <div class="col-sm-6 mx-auto d-flex">
-                <input type="password" class="form-control" id="passwordDel" placeholder="введите пароль">
+                <input type="password" class="form-control" id="passwordDel" disabled>
             </div>
         </div>
 
         <div class="form-group text-center" multiple aria-label="multiple select">
             <label for="rolesDel">Role</label>
             <div class="col-sm-6 mx-auto d-flex mb-2">
-                <select class="form-select" id="rolesDel" name="roles" multiple>
+                <select class="form-select" id="rolesDel" name="role" multiple>
 
                 </select>
             </div>
+        </div>
         </div>
         <!-- <button type="submit" id="deleteBtnForm" class="btnDelete btn-success mx-auto d-flex">Delete user</button> -->
         <button type="submit" id="deleteUserButton" class="btn btn-success mx-auto d-flex">Delete</button>

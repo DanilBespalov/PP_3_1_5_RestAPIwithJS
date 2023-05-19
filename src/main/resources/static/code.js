@@ -35,10 +35,10 @@ const dataShow = (elements) => {
         <td>${element.email}</td>
         <td>${rolesName}</td>
         <td>
-            <a id="btnEdit" class="btnEdit btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
+            <a id="btnEdit" class="btnEdit btn btn-primary" data-action="Edit" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
             </td>
         <td>
-            <a id="btnDel" class="btnDelete btn btn-danger" data-bs-toggle="modal" data-bs-target="#delUserModal">Delete</a>
+            <a id="btnDel" class="btnDelete btn btn-danger" data-userid="${user.id}" data-action="Delete" data-bs-toggle="modal" data-bs-target="#delUserModal">Delete</a>
             
             </td>
     </tr>`
@@ -110,19 +110,21 @@ async function newUser() {
         }).then(() => {
                 console.log("создан пользователь: ");
                 createForm.reset();
+                $('#btnCloseForm').click();
                 getAllUsers();
-                $('#nav-tab-home').click();
             })
     }
 }
 
 function removeUser(){
+    
     const deleteForm = document.forms["deleteForm"];
-    const hrefDelete = `http://localhost:8080/api/admin/delete/${id}`;
+    const id = $('.deleteForm #id').val();
+    const hrefDel = `http://localhost:8080/api/admin/delete/${id}`;
 
     deleteForm.addEventListener("submit", ev => {
         ev.preventDefault();
-        fetch(hrefDelete + deleteForm.id.value, {
+        fetch(hrefDel, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -137,22 +139,20 @@ function removeUser(){
 
 $('#delUserModal').on('show.bs.modal', ev => {
     let button = $(ev.relatedTarget);
-    let id = button.data('userid');
-    showDeleteModal(id);
+    let idDel = button.data('userid');
+    showDeleteModal(idDel);
 })
 
-async function showDeleteModal(id) {
-    let user = await getUser(id);
 
-     // Получаем данные пользователя
-     $.get(href, function (user) {
-        // Заполняем форму данными пользователя
-        $('.deleteForm #id').val(user.id);
-        $('.deleteForm #name').val(user.name);
-        $('.deleteForm #surname').val(user.surname);
-        $('.deleteForm #username').val(user.username);
-        $('.deleteForm #email').val(user.email);
-    })
+async function showDeleteModal(idDel) {
+    let form = document.forms["formDeleteUser"];
+
+    form.idDel.value = user.id;
+    form.usernameDel.value = user.username;
+    form.nameDel.value = user.name;
+    form.surnameDel.value = user.surname;
+    form.emailDel.value = user.email;
+    form.passwordDel.value = user.password;
 
     $('#rolesDel').empty();
 
