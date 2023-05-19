@@ -142,7 +142,7 @@ $('#delUserModal').on('show.bs.modal', ev => {
     let idDel = button.data('userid');
     showDeleteModal(idDel);
 })
-
+//
 
 async function showDeleteModal(idDel) {
 
