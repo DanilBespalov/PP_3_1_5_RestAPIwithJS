@@ -102,7 +102,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addUserModalLabel">Создание пользователя</h5>
-                <button type="button" id="btnCloseForm" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="addFormCloseButton" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Форма добавления нового пользователя -->
@@ -169,7 +169,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editUserModalLabel">Редактирование пользователя</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="editFormCloseButton" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
 <div id="form-edit">
@@ -239,7 +239,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="delUserModalLabel">Удаление пользователя</h5>
-                <button type="button" id="btnCloseDelForm"class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="deleteFormCloseButton"class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
 <div id="form-delete">
@@ -290,7 +290,7 @@
         <div class="form-group text-center" multiple aria-label="multiple select">
             <label for="rolesDel">Role</label>
             <div class="col-sm-6 mx-auto d-flex mb-2">
-                <select class="form-select" id="rolesDel" name="role" multiple>
+                <select class="form-select" id="rolesDel" name="role" multiple disabled>
 
                 </select>
             </div>

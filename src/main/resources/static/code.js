@@ -8,6 +8,8 @@ $(async function () {
 });
 
 // Получение списка пользователей 
+async function getAllUsers() {
+
 const url = 'http://localhost:8080/api/admin'
 const container = document.querySelector('tbody')
 let resultData = ''
@@ -21,7 +23,6 @@ const password = document.getElementById('password')
 const roles = document.getElementById('roles')
 let option = ''
 
-async function getAllUsers() {
 const dataShow = (elements) => {
     elements.forEach(element => {
 
@@ -59,7 +60,6 @@ async function getUser(id) {
     return await response.json();
 }
 
-// Создание нового пользователя
 async function getRolesOption() {
     await fetch("http://localhost:8080/api/admin/roles")
         .then(response => response.json())
@@ -73,6 +73,7 @@ async function getRolesOption() {
         })
 }
 
+// Создание нового пользователя
 async function newUser() {
     await getRolesOption();
     
@@ -115,7 +116,7 @@ async function newUser() {
         }).then(() => {
                 console.log("создан пользователь: ");
                 createForm.reset();
-                $('#btnCloseForm').click();
+                $('#addFormCloseButton').click();
                 getAllUsers();
             })
     }
@@ -181,63 +182,63 @@ async function showDeleteModal(id) {
 }
 
 
-function updateUser(){
+function updateUser() {
 
     const editForm = document.forms["editForm"];
     const id = editForm.idEdit.value;
     const hrefEdit = `http://localhost:8080/api/admin/edit/${id}`;
-
+    
     let editUserRoles = [];
-    for (let i = 0; i < editForm.role.options.length; i++) {
-        if (editForm.role.options[i].selected) editUserRoles.push({
-            id: editForm.role.options[i].value,
-            roles: editForm.role.options[i].text
-        })
+    for (let i = 0; i < editForm.rolesEdit.options.length; i++) {
+      if (editForm.rolesEdit.options[i].selected) {
+        editUserRoles.push({
+          id: editForm.rolesEdit.options[i].value,
+          roles: editForm.rolesEdit.options[i].text,
+        });
+      }
     }
-
-    editForm.addEventListener("submit", ev => {
-        ev.preventDefault();
-        fetch(hrefEdit, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: editForm.usernameEdit.value,
-                name: editForm.nameedit.value, 
-                surname: editForm.surnameEdit.value, 
-                email: editForm.emailEdit.value,
-                password: editForm.passwordEdit.value,
-                roles: editUserRoles
-            })
-
-        }).then(() => {
-            console.log("пользователь изменен", id)
-                getAllUsers();
-                $('#editFormCloseButton').click();
-
-            })
-    })
-}
-
-$('#editUserModal').on('show.bs.modal', ev => {
+      
+    editForm.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      
+      fetch(hrefEdit, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: editForm.usernameEdit.value,
+          name: editForm.nameEdit.value,
+          surname: editForm.surnameEdit.value,
+          email: editForm.emailEdit.value,
+          password: editForm.passwordEdit.value,
+          roles: editUserRoles,
+        }),
+      })
+      .then(() => {
+        console.log("пользователь изменен", id);
+        getAllUsers();
+        $('#editFormCloseButton').click();
+      });
+    });
+  }
+  
+  $('#editUserModal').on('show.bs.modal', (ev) => {
     let button = $(ev.relatedTarget);
     let id = button.data('userid');
     showEditModal(id);
-})
-//
-
-$('#editUserButton').click(ev => {
-
+  });
+  
+  $('#editUserButton').click((ev) => {
     updateUser();
-});
+  });
+  
+  async function showEditModal(id) {
 
-
-async function showEditModal(id) {
-    console.log(" появилась форма редактирования")
-    let user = await getUser(id)
+    console.log("появилась форма редактирования");
+    let user = await getUser(id);
     const form = document.forms["editForm"];
-     
+  
     form.idEdit.value = user.id;
     form.usernameEdit.value = user.username;
     form.nameEdit.value = user.name;
@@ -245,5 +246,17 @@ async function showEditModal(id) {
     form.emailEdit.value = user.email;
     form.passwordEdit.value = user.password;
 
-}
+    $('#rolesEdit').empty();
 
+    await fetch("http://localhost:8080/api/admin/roles")
+        .then(response => response.json())
+        .then(roles => {
+            roles.forEach(role => {
+                let el = document.createElement("option");
+                el.value = role.id;
+                el.text = role.role.substring(5);
+                $('#rolesEdit')[0].appendChild(el);
+            })
+        })
+  }
+  
