@@ -2,8 +2,8 @@ $(async function () {
     // await getAuthUser();
     await getAllUsers();
     await newUser();
-    // removeUser();
-    // updateUser();
+    removeUser();
+    updateUser();
 
 });
 
@@ -35,7 +35,7 @@ const dataShow = (elements) => {
         <td>${element.email}</td>
         <td>${rolesName}</td>
         <td>
-            <a id="btnEdit" class="btnEdit btn btn-primary" data-action="Edit" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
+            <a id="btnEdit" class="btnEdit btn btn-primary" data-userid="${element.id}" data-action="Edit" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</a>
             </td>
         <td>
             <a id="btnDel" class="btnDelete btn btn-danger" data-userid="${element.id}" data-action="Delete" data-bs-toggle="modal" data-bs-target="#delUserModal">Delete</a>
@@ -124,7 +124,7 @@ async function newUser() {
 function removeUser(){
     
     const deleteForm = document.forms["deleteForm"];
-    const id = deleteForm.id.value;
+    const id = deleteForm.idDel.value;
     const hrefDel = `http://localhost:8080/api/admin/delete/${id}`;
 
     deleteForm.addEventListener("submit", ev => {
@@ -135,6 +135,7 @@ function removeUser(){
                 'Content-Type': 'application/json'
             }
         }).then(() => {
+            console.log("пользователь удален", id)
                 getAllUsers();
                 $('#deleteFormCloseButton').click();
 
@@ -149,25 +150,100 @@ $('#delUserModal').on('show.bs.modal', ev => {
 })
 //
 
+$('#deleteUserButton').click(ev => {
+  
+    removeUser();
+});
+
+
 async function showDeleteModal(id) {
+    console.log(" появилась форма удаления")
     let user = await getUser(id)
-    let form = document.forms["formDeleteUser"];
+    const form = document.forms["deleteForm"];
      
-    form.id.value = user.id;
-    form.username.value = user.username;
-    form.name.value = user.name;
-    form.surname.value = user.surname;
-    form.email.value = user.email;
-    form.password.value = user.password;
+    form.idDel.value = user.id;
+    form.usernameDel.value = user.username;
+    form.nameDel.value = user.name;
+    form.surnameDel.value = user.surname;
+    form.emailDel.value = user.email;
+    form.passwordDel.value = user.password;
 
     $('#rolesDel').empty();
 
-    user.role.forEach(role => {
+    user.roles.forEach(role => {
         let el = document.createElement("option");
-        el.text = role.roleName.substring(5);
+        el.text = role.role.substring(5);
         el.value = role.id;
         $('#rolesDel')[0].appendChild(el);
+        
     });
+
 }
 
+
+function updateUser(){
+
+    const editForm = document.forms["editForm"];
+    const id = editForm.idEdit.value;
+    const hrefEdit = `http://localhost:8080/api/admin/edit/${id}`;
+
+    let editUserRoles = [];
+    for (let i = 0; i < editForm.role.options.length; i++) {
+        if (editForm.role.options[i].selected) editUserRoles.push({
+            id: editForm.role.options[i].value,
+            roles: editForm.role.options[i].text
+        })
+    }
+
+    editForm.addEventListener("submit", ev => {
+        ev.preventDefault();
+        fetch(hrefEdit, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: editForm.usernameEdit.value,
+                name: editForm.nameedit.value, 
+                surname: editForm.surnameEdit.value, 
+                email: editForm.emailEdit.value,
+                password: editForm.passwordEdit.value,
+                roles: editUserRoles
+            })
+
+        }).then(() => {
+            console.log("пользователь изменен", id)
+                getAllUsers();
+                $('#editFormCloseButton').click();
+
+            })
+    })
+}
+
+$('#editUserModal').on('show.bs.modal', ev => {
+    let button = $(ev.relatedTarget);
+    let id = button.data('userid');
+    showEditModal(id);
+})
+//
+
+$('#editUserButton').click(ev => {
+
+    updateUser();
+});
+
+
+async function showEditModal(id) {
+    console.log(" появилась форма редактирования")
+    let user = await getUser(id)
+    const form = document.forms["editForm"];
+     
+    form.idEdit.value = user.id;
+    form.usernameEdit.value = user.username;
+    form.nameEdit.value = user.name;
+    form.surnameEdit.value = user.surname;
+    form.emailEdit.value = user.email;
+    form.passwordEdit.value = user.password;
+
+}
 

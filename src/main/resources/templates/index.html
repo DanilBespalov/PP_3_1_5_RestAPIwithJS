@@ -173,7 +173,15 @@
             </div>
 
 <div id="form-edit">
-    <form id="editForm" style="display: none;">
+    <form id="editForm">
+
+        <div class="mb-2 text-center">
+            <label for="IdEdit" class="col-sm-6 col-form-label">ID</label>
+            <div class="col-6 mx-auto d-flex">
+                <input type="text" class="form-control" id="idEdit" disabled>
+            </div>
+        </div>
+
         <div class="mb-2 text-center">
             <label for="usernameEdit" class="col-sm-6 col-form-label">User name</label>
             <div class="col-6 mx-auto d-flex">
@@ -212,7 +220,7 @@
         <div class="form-group text-center" multiple aria-label="multiple select">
             <label for="rolesEdit">Role</label>
             <div class="col-sm-6 mx-auto d-flex mb-2">
-                <select class="form-select" id="rolesEdit" name="roles" multiple>
+                <select class="form-select" id="rolesEdit" name="role" multiple>
 
                 </select>
             </div>
@@ -235,13 +243,14 @@
             </div>
 
 <div id="form-delete">
-    <form id="deleteForm" style="display: none;">
+    <form id="deleteForm">
 
         <div class="mb-2 text-center">
-            <label for="usernameDel" class="col-sm-6 col-form-label">ID</label>
+            <label for="IdDel" class="col-sm-6 col-form-label">ID</label>
             <div class="col-6 mx-auto d-flex">
                 <input type="text" class="form-control" id="idDel" disabled>
             </div>
+        </div>
 
         <div class="mb-2 text-center">
             <label for="usernameDel" class="col-sm-6 col-form-label">User name</label>
@@ -286,8 +295,6 @@
                 </select>
             </div>
         </div>
-        </div>
-        <!-- <button type="submit" id="deleteBtnForm" class="btnDelete btn-success mx-auto d-flex">Delete user</button> -->
         <button type="submit" id="deleteUserButton" class="btn btn-success mx-auto d-flex">Delete</button>
     </form>
 </div>
