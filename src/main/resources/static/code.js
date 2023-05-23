@@ -7,6 +7,25 @@ $(async function () {
 
 });
 
+// async function getAuthUser() {
+//     fetch("user/auth")
+//         .then(response => response.json())
+//         .then(data => {
+//             $('#userMail').append(data.email);
+//             $('#userRole').append(data.role[0].roleName.substring(5));
+//             let user = `$(
+//             <tr class="fs-5">
+//                 <td>${data.id}</td>
+//                 <td>${data.firstName}</td>
+//                 <td>${data.lastName}</td>
+//                 <td>${data.age}</td>
+//                 <td>${data.email}</td>
+//                 <td>${data.stringRole}</td>)`;
+//             $('#userTable').append(user);
+//         })
+//         .catch(error => console.log(error))
+// }
+
 // Получение списка пользователей 
 async function getAllUsers() {
 
@@ -52,6 +71,12 @@ fetch(url)
     .then(data => dataShow(data))
     .catch(error => console.log(error))
 
+}
+
+async function getAuthUser() {
+    let url = "http://localhost:8080/api/admin/user";
+    let response = await fetch(url);
+    return await response.json();
 }
 
 async function getUser(id) {
@@ -188,18 +213,15 @@ function updateUser() {
     const id = editForm.idEdit.value;
     const hrefEdit = `http://localhost:8080/api/admin/edit/${id}`;
     
-    let editUserRoles = [];
-    for (let i = 0; i < editForm.rolesEdit.options.length; i++) {
-      if (editForm.rolesEdit.options[i].selected) {
-        editUserRoles.push({
-          id: editForm.rolesEdit.options[i].value,
-          roles: editForm.rolesEdit.options[i].text,
-        });
-      }
-    }
-      
-    editForm.addEventListener("submit", (ev) => {
-      ev.preventDefault();
+    editForm.addEventListener("submit", async ev => {
+        ev.preventDefault();
+        let editUserRoles = [];
+        for (let i = 0; i < editForm.rolesEdit.options.length; i++) {
+            if (editForm.rolesEdit.options[i].selected) editUserRoles.push({
+                id: editForm.rolesEdit.options[i].value,
+                roles: editForm.rolesEdit.options[i].text
+            })
+        }
       
       fetch(hrefEdit, {
         method: "PUT",
@@ -229,7 +251,7 @@ function updateUser() {
     showEditModal(id);
   });
   
-  $('#editUserButton').click((ev) => {
+  $('#editUserButton').click(() => {
     updateUser();
   });
   
@@ -247,7 +269,6 @@ function updateUser() {
     form.passwordEdit.value = user.password;
 
     $('#rolesEdit').empty();
-
     await fetch("http://localhost:8080/api/admin/roles")
         .then(response => response.json())
         .then(roles => {
@@ -259,4 +280,6 @@ function updateUser() {
             })
         })
   }
+  
+
   
