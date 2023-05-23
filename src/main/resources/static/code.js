@@ -213,7 +213,7 @@ function updateUser() {
     const id = editForm.idEdit.value;
     const hrefEdit = `http://localhost:8080/api/admin/edit/${id}`;
     
-    editForm.addEventListener("submit", async ev => {
+    editForm.addEventListener("submit", async (ev) => {
         ev.preventDefault();
         let editUserRoles = [];
         for (let i = 0; i < editForm.rolesEdit.options.length; i++) {
