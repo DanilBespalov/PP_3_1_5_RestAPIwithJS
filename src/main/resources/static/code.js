@@ -1,5 +1,5 @@
 $(async function () {
-    // await getAuthUser();
+    await getAuthUser();
     await getAllUsers();
     await newUser();
     removeUser();
@@ -7,24 +7,22 @@ $(async function () {
 
 });
 
-// async function getAuthUser() {
-//     fetch("user/auth")
-//         .then(response => response.json())
-//         .then(data => {
-//             $('#userMail').append(data.email);
-//             $('#userRole').append(data.role[0].roleName.substring(5));
-//             let user = `$(
-//             <tr class="fs-5">
-//                 <td>${data.id}</td>
-//                 <td>${data.firstName}</td>
-//                 <td>${data.lastName}</td>
-//                 <td>${data.age}</td>
-//                 <td>${data.email}</td>
-//                 <td>${data.stringRole}</td>)`;
-//             $('#userTable').append(user);
-//         })
-//         .catch(error => console.log(error))
-// }
+async function getAuthUser() {
+    fetch("http://localhost:8080/api/user/user")
+        .then(response => response.json())
+        .then(data => {
+            let user = `$(
+            <tr class="fs-5">
+                <td>${data.id}</td>
+                <td>${data.name}</td>
+                <td>${data.surname}</td>
+                <td>${data.username}</td>
+                <td>${data.email}</td>
+                <td>${data.role}</td>)`;
+            $('#userTable').append(user);
+        })
+        .catch(error => console.log(error))
+}
 
 // Получение списка пользователей 
 async function getAllUsers() {
@@ -71,12 +69,6 @@ fetch(url)
     .then(data => dataShow(data))
     .catch(error => console.log(error))
 
-}
-
-async function getAuthUser() {
-    let url = "http://localhost:8080/api/admin/user";
-    let response = await fetch(url);
-    return await response.json();
 }
 
 async function getUser(id) {
@@ -219,16 +211,17 @@ function updateUser() {
         for (let i = 0; i < editForm.rolesEdit.options.length; i++) {
             if (editForm.rolesEdit.options[i].selected) editUserRoles.push({
                 id: editForm.rolesEdit.options[i].value,
-                roles: editForm.rolesEdit.options[i].text
+                role: editForm.rolesEdit.options[i].text
             })
         }
       
       fetch(hrefEdit, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: id,
           username: editForm.usernameEdit.value,
           name: editForm.nameEdit.value,
           surname: editForm.surnameEdit.value,
