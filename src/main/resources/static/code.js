@@ -1,5 +1,5 @@
 $(async function () {
-    await getAuthUser();
+    await getAuthAdmin();
     await getAllUsers();
     await newUser();
     removeUser();
@@ -7,8 +7,8 @@ $(async function () {
 
 });
 
-async function getAuthUser() {
-    fetch("http://localhost:8080/api/user/user")
+async function getAuthAdmin() {
+    fetch("http://localhost:8080/api/admin/user")
         .then(response => response.json())
         .then(data => {
             let user = `$(
@@ -19,32 +19,33 @@ async function getAuthUser() {
                 <td>${data.username}</td>
                 <td>${data.email}</td>
                 <td>${data.role}</td>)`;
-            $('#userTable').append(user);
+            $('#userTableAdminView').append(user);
         })
         .catch(error => console.log(error))
 }
 
+
 // Получение списка пользователей 
 async function getAllUsers() {
 
-const url = 'http://localhost:8080/api/admin'
-const container = document.querySelector('tbody')
-let resultData = ''
+    const url = 'http://localhost:8080/api/admin'
+    const container = document.querySelector('tbody')
+    let resultData = ''
 
-const id = document.getElementById('id')
-const userName = document.getElementById('username')
-const name = document.getElementById('name')
-const surname = document.getElementById('surname')
-const email = document.getElementById('email')
-const password = document.getElementById('password')
-const roles = document.getElementById('roles')
-let option = ''
+    const id = document.getElementById('id')
+    const userName = document.getElementById('username')
+    const name = document.getElementById('name')
+    const surname = document.getElementById('surname')
+    const email = document.getElementById('email')
+    const password = document.getElementById('password')
+    const roles = document.getElementById('roles')
+    let option = ''
 
-const dataShow = (elements) => {
-    elements.forEach(element => {
+    const dataShow = (elements) => {
+        elements.forEach(element => {
 
-        const rolesName = element.roles.map(role => role.role.replace('ROLE_', ' ')).join(', ')
-        resultData += `
+            const rolesName = element.roles.map(role => role.role.replace('ROLE_', ' ')).join(', ')
+            resultData += `
     <tr>
         <td>${element.id}</td>
         <td>${element.name}</td>
@@ -60,14 +61,14 @@ const dataShow = (elements) => {
             
             </td>
     </tr>`
-    });
-    container.innerHTML = resultData
-}
+        });
+        container.innerHTML = resultData
+    }
 
-fetch(url)
-    .then(response => response.json())
-    .then(data => dataShow(data))
-    .catch(error => console.log(error))
+    fetch(url)
+        .then(response => response.json())
+        .then(data => dataShow(data))
+        .catch(error => console.log(error))
 
 }
 
@@ -93,17 +94,17 @@ async function getRolesOption() {
 // Создание нового пользователя
 async function newUser() {
     await getRolesOption();
-    
+
     const createForm = document.forms["createForm"];
     const createLink = document.querySelector('#addNewUser');
     const createButton = document.querySelector('#createUserButton');
-    
+
     // Добавляем обработчик событий на нажатие ссылки
     createLink.addEventListener('click', (event) => {
-    event.preventDefault();                   
-    console.log("  нажал на кнопку")
-    createForm.style.display = 'block';       
-});
+        event.preventDefault();
+        console.log("  нажал на кнопку")
+        createForm.style.display = 'block';
+    });
     createForm.addEventListener('submit', addNewUser)
     createButton.addEventListener('click', addNewUser);
 
@@ -124,23 +125,23 @@ async function newUser() {
             },
             body: JSON.stringify({
                 username: createForm.usernameNew.value,
-                name: createForm.nameNew.value, 
-                surname: createForm.surnameNew.value, 
+                name: createForm.nameNew.value,
+                surname: createForm.surnameNew.value,
                 email: createForm.emailNew.value,
                 password: createForm.passwordNew.value,
                 roles: newUserRoles
             })
         }).then(() => {
-                console.log("создан пользователь: ");
-                createForm.reset();
-                $('#addFormCloseButton').click();
-                getAllUsers();
-            })
+            console.log("создан пользователь: ");
+            createForm.reset();
+            $('#addFormCloseButton').click();
+            getAllUsers();
+        })
     }
 }
 
-function removeUser(){
-    
+function removeUser() {
+
     const deleteForm = document.forms["deleteForm"];
     const id = deleteForm.idDel.value;
     const hrefDel = `http://localhost:8080/api/admin/delete/${id}`;
@@ -154,10 +155,10 @@ function removeUser(){
             }
         }).then(() => {
             console.log("пользователь удален", id)
-                getAllUsers();
-                $('#deleteFormCloseButton').click();
+            getAllUsers();
+            $('#deleteFormCloseButton').click();
 
-            })
+        })
     })
 }
 
@@ -169,7 +170,7 @@ $('#delUserModal').on('show.bs.modal', ev => {
 //
 
 $('#deleteUserButton').click(ev => {
-  
+
     removeUser();
 });
 
@@ -178,7 +179,7 @@ async function showDeleteModal(id) {
     console.log(" появилась форма удаления")
     let user = await getUser(id)
     const form = document.forms["deleteForm"];
-     
+
     form.idDel.value = user.id;
     form.usernameDel.value = user.username;
     form.nameDel.value = user.name;
@@ -193,7 +194,7 @@ async function showDeleteModal(id) {
         el.text = role.role.substring(5);
         el.value = role.id;
         $('#rolesDel')[0].appendChild(el);
-        
+
     });
 
 }
@@ -204,7 +205,7 @@ function updateUser() {
     const editForm = document.forms["editForm"];
     const id = editForm.idEdit.value;
     const hrefEdit = `http://localhost:8080/api/admin/edit/${id}`;
-    
+
     editForm.addEventListener("submit", async (ev) => {
         ev.preventDefault();
         let editUserRoles = [];
@@ -214,46 +215,46 @@ function updateUser() {
                 role: editForm.rolesEdit.options[i].text
             })
         }
-      
-      fetch(hrefEdit, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: id,
-          username: editForm.usernameEdit.value,
-          name: editForm.nameEdit.value,
-          surname: editForm.surnameEdit.value,
-          email: editForm.emailEdit.value,
-          password: editForm.passwordEdit.value,
-          roles: editUserRoles,
-        }),
-      })
-      .then(() => {
-        console.log("пользователь изменен", id);
-        getAllUsers();
-        $('#editFormCloseButton').click();
-      });
+
+        fetch(hrefEdit, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: id,
+                username: editForm.usernameEdit.value,
+                name: editForm.nameEdit.value,
+                surname: editForm.surnameEdit.value,
+                email: editForm.emailEdit.value,
+                password: editForm.passwordEdit.value,
+                roles: editUserRoles,
+            }),
+        })
+            .then(() => {
+                console.log("пользователь изменен", id);
+                getAllUsers();
+                $('#editFormCloseButton').click();
+            });
     });
-  }
-  
-  $('#editUserModal').on('show.bs.modal', (ev) => {
+}
+
+$('#editUserModal').on('show.bs.modal', (ev) => {
     let button = $(ev.relatedTarget);
     let id = button.data('userid');
     showEditModal(id);
-  });
-  
-  $('#editUserButton').click(() => {
+});
+
+$('#editUserButton').click(() => {
     updateUser();
-  });
-  
-  async function showEditModal(id) {
+});
+
+async function showEditModal(id) {
 
     console.log("появилась форма редактирования");
     let user = await getUser(id);
     const form = document.forms["editForm"];
-  
+
     form.idEdit.value = user.id;
     form.usernameEdit.value = user.username;
     form.nameEdit.value = user.name;
@@ -272,7 +273,7 @@ function updateUser() {
                 $('#rolesEdit')[0].appendChild(el);
             })
         })
-  }
+}
   
 
   
