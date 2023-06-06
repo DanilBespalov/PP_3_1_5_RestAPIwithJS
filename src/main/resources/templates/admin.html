@@ -49,7 +49,7 @@
         </div>
              
         <div class="col-10 bg-light">
-            <div class="tab-pane fade show active" sec:authorize="hasRole('ROLE_ADMIN')" id="admin">
+            <div class="tab-pane fade show active admin-view" sec:authorize="hasRole('ROLE_ADMIN')" id="admin">
             <h1>Admin panel </h1>
             <h3 class="navbar navbar-expand-lg bg-light border rounded-top m-0 ps-4">All users</h3>
     
@@ -64,7 +64,7 @@
                 </li>
             </ul>
             
-            <table id="usersTableBody" class="table table-striped">
+            <table id="usersTableBody" class="table table-striped admin-view">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -77,10 +77,10 @@
                     <th scope="col">Delete</th>
                 </tr>
                 </thead>
-                <tbody id="userTableAdminView"></tbody>
+                <tbody id="userTableAdminView" class="admin-view"></tbody>
             </table>
         </div>
-    </div>
+  
     <div class="tab-pane fade" id="user">
         <h1>User information page</h1>
         <h3>About user</h3>
@@ -88,7 +88,6 @@
         <table id="userTableBody" class="table table-striped">
             <thead>
             <tr>
-                
                 <th scope="col">ID</th>
                 <th scope="col">Имя</th>
                 <th scope="col">Фамилия</th>
@@ -101,6 +100,7 @@
         </table>
     </div>
     </div>
+</div>
 </div>
 <!-- Модальное окно с формой создания пользователя -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">

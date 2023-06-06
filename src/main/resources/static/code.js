@@ -11,6 +11,7 @@ async function getAuthAdmin() {
     fetch("http://localhost:8080/api/admin/user")
         .then(response => response.json())
         .then(data => {
+            let role = data.roles[0].role.substring(5);
             let user = `$(
             <tr class="fs-5">
                 <td>${data.id}</td>
@@ -18,12 +19,21 @@ async function getAuthAdmin() {
                 <td>${data.surname}</td>
                 <td>${data.username}</td>
                 <td>${data.email}</td>
-                <td>${data.role}</td>)`;
-            $('#userTableAdminView').append(user);
+                <td>${role}</td>)`;
+            $('#userTableUserView').append(user);
         })
         .catch(error => console.log(error))
 }
 
+// При переключении на вкладку User скрываем контейнер userTableAdminView
+$('#pills-profile-tab').on('click', function() {
+    $('.admin-view').hide();
+  });
+  
+  // При переключении на вкладку Admin показываем контейнер userTableAdminView
+  $('#pills-home-tab').on('click', function() {
+    $('.admin-view').show();
+  });
 
 // Получение списка пользователей 
 async function getAllUsers() {
