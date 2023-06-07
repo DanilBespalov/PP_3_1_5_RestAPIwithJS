@@ -7,7 +7,7 @@ $(async function () {
 });
 
 async function getAuthUser() {
-    fetch("http://localhost:8080/api/user/user")
+    fetch("/api/user/user")
         .then(response => response.json())
         .then(data => {
             let role = data.roles[0].role.substring(5);

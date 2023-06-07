@@ -8,7 +8,7 @@ $(async function () {
 });
 
 async function getAuthAdmin() {
-    fetch("http://localhost:8080/api/admin/user")
+    fetch("/api/admin/user")
         .then(response => response.json())
         .then(data => {
             let role = data.roles[0].role.substring(5);
@@ -38,7 +38,7 @@ $('#pills-profile-tab').on('click', function() {
 // Получение списка пользователей 
 async function getAllUsers() {
 
-    const url = 'http://localhost:8080/api/admin'
+    const url = '/api/admin'
     const container = document.querySelector('tbody')
     let resultData = ''
 
@@ -83,13 +83,13 @@ async function getAllUsers() {
 }
 
 async function getUser(id) {
-    let url = "http://localhost:8080/api/admin/" + id;
+    let url = "/api/admin/" + id;
     let response = await fetch(url);
     return await response.json();
 }
 
 async function getRolesOption() {
-    await fetch("http://localhost:8080/api/admin/roles")
+    await fetch("/api/admin/roles")
         .then(response => response.json())
         .then(roles => {
             roles.forEach(role => {
@@ -128,7 +128,7 @@ async function newUser() {
             })
         }
 
-        fetch("http://localhost:8080/api/admin/new", {
+        fetch("/api/admin/new", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -154,7 +154,7 @@ function removeUser() {
 
     const deleteForm = document.forms["deleteForm"];
     const id = deleteForm.idDel.value;
-    const hrefDel = `http://localhost:8080/api/admin/delete/${id}`;
+    const hrefDel = `/api/admin/delete/${id}`;
 
     deleteForm.addEventListener("submit", ev => {
         ev.preventDefault();
@@ -214,7 +214,7 @@ function updateUser() {
 
     const editForm = document.forms["editForm"];
     const id = editForm.idEdit.value;
-    const hrefEdit = `http://localhost:8080/api/admin/edit/${id}`;
+    const hrefEdit = `/api/admin/edit/${id}`;
 
     editForm.addEventListener("submit", async (ev) => {
         ev.preventDefault();
@@ -273,7 +273,7 @@ async function showEditModal(id) {
     form.passwordEdit.value = user.password;
 
     $('#rolesEdit').empty();
-    await fetch("http://localhost:8080/api/admin/roles")
+    await fetch("/api/admin/roles")
         .then(response => response.json())
         .then(roles => {
             roles.forEach(role => {

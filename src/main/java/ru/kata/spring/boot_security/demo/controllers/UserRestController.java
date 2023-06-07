@@ -15,13 +15,13 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class UserRestController {
 
     private final UserService userService;
     private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
+    public UserRestController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
