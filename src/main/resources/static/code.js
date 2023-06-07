@@ -42,15 +42,6 @@ async function getAllUsers() {
     const container = document.querySelector('tbody')
     let resultData = ''
 
-    const id = document.getElementById('id')
-    const userName = document.getElementById('username')
-    const name = document.getElementById('name')
-    const surname = document.getElementById('surname')
-    const email = document.getElementById('email')
-    const password = document.getElementById('password')
-    const roles = document.getElementById('roles')
-    let option = ''
-
     const dataShow = (elements) => {
         elements.forEach(element => {
 
@@ -179,7 +170,7 @@ $('#delUserModal').on('show.bs.modal', ev => {
 })
 //
 
-$('#deleteUserButton').click(ev => {
+$('#deleteUserButton').click(() => {
 
     removeUser();
 });
